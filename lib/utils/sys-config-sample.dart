@@ -1,3 +1,3 @@
 class sysConfig {
-  static const String apiUrl = 'http://192.168.0.111:3002';
+  static const String apiUrl = 'past your ip';
 }
