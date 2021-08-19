@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -9,12 +10,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final txtPass = TextEditingController();
   final txtUser = TextEditingController();
-  String u_name = '';
-  String p_word = '';
+  String userName = '';
+  String passWord = '';
   String warn = '';
+  String SnackBarTxt = '';
   bool shouldpop = false;
 
   Future onBackPress({ctx}) async {
@@ -34,7 +36,6 @@ class _LoginPageState extends State<LoginPage> {
           TextButton(
             onPressed: () {
               shouldpop = true;
-              print(shouldpop);
               Navigator.pop(context, 'OK');
             },
             child: const Text('OK'),
@@ -44,32 +45,44 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void loginFunction({@required u_name, p_word, ctx}) async {
+  void loginFunction({@required userName, passWord, ctx}) async {
     final prefs = await SharedPreferences.getInstance();
+    final contents = await rootBundle.loadString(
+      'assets/config/sys-config.json',
+    );
+
+// decode our json
+    final config = jsonDecode(contents);
+    final apiurl = config['apiUrl'];
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.111:3002/admin'),
-        body: {'username': u_name, 'password': p_word},
+        Uri.parse('$apiurl/login'),
+        body: {'username': userName, 'password': passWord},
       );
-      final resp = json.decode(response.body);
-      if (resp['status'] == 'success') {
-        ScaffoldMessenger.of(ctx)
-            .showSnackBar(const SnackBar(content: Text('login succesfull')));
-        setState(() {
-          warn = '';
-        });
+      if (response.statusCode == 200) {
+        final resp = json.decode(response.body);
+        if (resp['status'] == 'success') {
+          SnackBarTxt = 'login succesfull';
+          setState(() {
+            warn = '';
+          });
+          prefs.setBool('isLogged', false);
+        } else {
+          SnackBarTxt = resp['error'];
+          setState(() {
+            warn = resp['error'];
+          });
+        }
       } else {
-        ScaffoldMessenger.of(ctx)
-            .showSnackBar(SnackBar(content: Text(resp['error'])));
-        setState(() {
-          warn = resp['error'];
-        });
+        SnackBarTxt = 'something went wrong';
       }
     } catch (e) {
       print(e);
       throw e;
     }
+    ScaffoldMessenger.of(ctx)
+        .showSnackBar(SnackBar(content: Text(SnackBarTxt)));
   }
 
   @override
@@ -87,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         body: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               children: <Widget>[
                 Text(
@@ -110,9 +123,9 @@ class _LoginPageState extends State<LoginPage> {
                         contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(),
                         labelText: 'Username',
-                        hintText: 'Enter valid username as abc@gmail.com'),
+                        hintText: 'Enter valid username'),
                     onChanged: (value) {
-                      this.u_name = value;
+                      this.userName = value;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -134,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Password',
                         hintText: 'Enter secure password'),
                     onChanged: (value) {
-                      this.p_word = value;
+                      this.passWord = value;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -154,10 +167,10 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(20)),
                   child: FlatButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
+                      if (formKey.currentState!.validate()) {
                         loginFunction(
-                            u_name: this.u_name,
-                            p_word: this.p_word,
+                            userName: this.userName,
+                            passWord: this.passWord,
                             ctx: this.context);
                       }
                     },
