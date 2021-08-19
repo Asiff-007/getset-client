@@ -1,3 +1,3 @@
 class sysConfig {
-  static const String apiUrl = 'past your ip';
+  static const String apiUrl = 'paste your ip';
 }

@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../utils/sys-config.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -57,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         final resp = json.decode(response.body);
         if (resp['status'] == 'success') {
-          SnackBarTxt = 'login succesfull';
+          SnackBarTxt = tr('success');
           setState(() {
             warn = '';
           });
