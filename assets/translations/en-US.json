@@ -1,0 +1,23 @@
+{
+    "login_success":"Login successful",
+    "login_wrong":"Something went wrong",
+    "login_title":"Login",
+    "login_button":"Login",
+
+    "alert":"Alert",
+    "alert_exit":"Do you want to exit",
+    "alert_ok":"Ok",
+    "alert_cancel":"Cancel",
+
+    "label_username":"Username",
+    "label_password":"Password",
+
+    "hint_username":"Enter valid username",
+    "hint_password":"Enter valid password",
+
+    "validation_password":"Please enter password",
+    "validation_username":"Please enter username",
+
+    "no_internet":"No internet connection"
+
+}
