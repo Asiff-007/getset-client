@@ -31,7 +31,7 @@
 .pub/
 /build/
 .vscode/launch.json
-assets/config/sys-config.json
+lib/utils/sys-config.dart
 
 # Web related
 lib/generated_plugin_registrant.dart

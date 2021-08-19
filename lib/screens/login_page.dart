@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../utils/sys-config.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -47,13 +47,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginFunction({@required userName, passWord, ctx}) async {
     final prefs = await SharedPreferences.getInstance();
-    final contents = await rootBundle.loadString(
-      'assets/config/sys-config.json',
-    );
-
-// decode our json
-    final config = jsonDecode(contents);
-    final apiurl = config['apiUrl'];
+    final apiurl = sysConfig.apiUrl;
 
     try {
       final response = await http.post(
