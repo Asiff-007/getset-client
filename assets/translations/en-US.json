@@ -16,6 +16,8 @@
     "hint_password":"Enter valid password",
 
     "validation_password":"Please enter password",
-    "validation_username":"Please enter username"
+    "validation_username":"Please enter username",
+
+    "no_internet":"No internet connection"
 
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   String warn = '';
   String SnackBarTxt = '';
   bool shouldpop = false;
+  bool connection = true;
 
   Future onBackPress({ctx}) async {
     await showDialog<String>(
@@ -80,8 +83,27 @@ class _LoginPageState extends State<LoginPage> {
         .showSnackBar(SnackBar(content: Text(SnackBarTxt)));
   }
 
+  void checkConnection(BuildContext ctx) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        connection = true;
+      }
+    } on SocketException catch (_) {
+      connection = false;
+      showNoInternetMessage(ctx);
+    }
+  }
+
+  showNoInternetMessage(BuildContext context) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(tr('no_internet'))));
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkConnection(context);
+
     return WillPopScope(
       onWillPop: () async {
         await onBackPress(ctx: this.context);
