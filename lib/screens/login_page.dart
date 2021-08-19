@@ -24,22 +24,22 @@ class _LoginPageState extends State<LoginPage> {
     await showDialog<String>(
       context: ctx,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Alert'),
-        content: const Text('Do you want to exit'),
+        title: Text(tr('alert')),
+        content: Text(tr('alert_exit')),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.pop(context, 'Cancel');
               shouldpop = false;
             },
-            child: const Text('Cancel'),
+            child: Text(tr('alert_cancel')),
           ),
           TextButton(
             onPressed: () {
               shouldpop = true;
               Navigator.pop(context, 'OK');
             },
-            child: const Text('OK'),
+            child: Text(tr('alert_ok')),
           ),
         ],
       ),
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         final resp = json.decode(response.body);
         if (resp['status'] == 'success') {
-          SnackBarTxt = tr('success');
+          SnackBarTxt = tr('login_success');
           setState(() {
             warn = '';
           });
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
           });
         }
       } else {
-        SnackBarTxt = 'something went wrong';
+        SnackBarTxt = tr('login_wrong');
       }
     } catch (e) {
       print(e);
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent[700],
-          title: Text("Login"),
+          title: Text(tr('login_title')),
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -117,14 +117,14 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(),
-                        labelText: 'Username',
-                        hintText: 'Enter valid username'),
+                        labelText: tr('label_username'),
+                        hintText: tr('hint_username')),
                     onChanged: (value) {
                       this.userName = value;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter username';
+                        return tr('validation_username');
                       }
                       return null;
                     },
@@ -139,14 +139,14 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(10),
                         border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        hintText: 'Enter secure password'),
+                        labelText: tr('label_password'),
+                        hintText: tr('hint_password')),
                     onChanged: (value) {
                       this.passWord = value;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter password';
+                        return tr('validation_password');
                       }
                       return null;
                     },
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                     child: Text(
-                      'Login',
+                      tr('login_button'),
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
