@@ -1,6 +1,6 @@
 {
-    "login_success":"login successful",
-    "login_wrong":"something went wrong",
+    "login_success":"Login successful",
+    "login_wrong":"Something went wrong",
     "login_title":"Login",
     "login_button":"Login",
 

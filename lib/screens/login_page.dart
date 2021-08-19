@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../utils/sys-config.dart';
+import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class LoginPage extends StatefulWidget {
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginFunction({@required userName, passWord, ctx}) async {
     final prefs = await SharedPreferences.getInstance();
-    final apiurl = sysConfig.apiUrl;
+    final apiurl = SysConfig.apiUrl;
 
     try {
       final response = await http.post(
@@ -83,26 +84,9 @@ class _LoginPageState extends State<LoginPage> {
         .showSnackBar(SnackBar(content: Text(SnackBarTxt)));
   }
 
-  void checkConnection(BuildContext ctx) async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        connection = true;
-      }
-    } on SocketException catch (_) {
-      connection = false;
-      showNoInternetMessage(ctx);
-    }
-  }
-
-  showNoInternetMessage(BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(tr('no_internet'))));
-  }
-
   @override
   Widget build(BuildContext context) {
-    checkConnection(context);
+    CheckConnection().checkConnection(context);
 
     return WillPopScope(
       onWillPop: () async {
