@@ -67,6 +67,8 @@ class _LoginPageState extends State<LoginPage> {
             warn = '';
           });
           prefs.setBool('isLogged', false);
+          prefs.setInt('shop_id', resp['shop_id']);
+          Navigator.pushReplacementNamed(ctx, '/home');
         } else {
           SnackBarTxt = resp['error'];
           setState(() {
