@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -34,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              Navigator.pop(context, 'Cancel');
+              Navigator.pop(context, tr('alert_cancel'));
               shouldpop = false;
             },
             child: Text(tr('alert_cancel')),
@@ -42,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           TextButton(
             onPressed: () {
               shouldpop = true;
-              Navigator.pop(context, 'OK');
+              Navigator.pop(context, tr('alert_ok'));
             },
             child: Text(tr('alert_ok')),
           ),
@@ -88,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    CheckConnection().checkConnection(context);
+    Network().checkConnection(context);
 
     return WillPopScope(
       onWillPop: () async {

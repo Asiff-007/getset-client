@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              Navigator.pop(context, 'Cancel');
+              Navigator.pop(context, tr('alert_cancel'));
               shouldpop = false;
             },
             child: Text(tr('alert_cancel')),
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           TextButton(
             onPressed: () {
               shouldpop = true;
-              Navigator.pop(context, 'OK');
+              Navigator.pop(context, tr('alert_ok'));
             },
             child: Text(tr('alert_ok')),
           ),
@@ -52,14 +52,13 @@ class _HomePageState extends State<HomePage> {
       final resp = json.decode(response.body);
       return resp;
     } catch (e) {
-      print(e);
       throw e;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    CheckConnection().checkConnection(context);
+    Network().checkConnection(context);
 
     return WillPopScope(
       onWillPop: () async {
