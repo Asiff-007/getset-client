@@ -127,7 +127,7 @@ class CampaignListItem extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  elevation: 10,
+                  elevation: 7,
                   child: Center(
                     child: ListTile(
                       title: Icon(
@@ -136,16 +136,17 @@ class CampaignListItem extends StatelessWidget {
                       ),
                       subtitle: Text(
                         tr('new_campaign'),
-                        style: TextStyle(fontSize: 15.0),
+                        style: TextStyle(fontSize: 14.0),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
                 ));
           } else {
-            String campaignName = campaigns[index - 1]['campaign_name'],
-                campaignStatus = campaigns[index - 1]['status'],
-                totalPrices = campaigns[index - 1]['total_prices'].toString(),
+            var campaign = campaigns[index - 1];
+            String campaignName = campaign['campaign_name'],
+                campaignStatus = campaign['status'],
+                totalPrices = campaign['total_prices'].toString(),
                 claimedPrices =
                     campaigns[index - 1]['claimed_prices'].toString(),
                 totalPlayers = campaigns[index - 1]['total_players'].toString();
@@ -176,7 +177,7 @@ class CampaignListItem extends StatelessWidget {
                       flex: 2,
                       fit: FlexFit.tight,
                       child: ListTile(
-                        title: Text(claimedPrices + ' / ' + totalPrices,
+                        title: Text(claimedPrices + '/' + totalPrices,
                             style: TextStyle(
                                 fontSize: 18.0, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center),
