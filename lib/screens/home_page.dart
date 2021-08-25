@@ -147,9 +147,8 @@ class CampaignListItem extends StatelessWidget {
             String campaignName = campaign['campaign_name'],
                 campaignStatus = campaign['status'],
                 totalPrices = campaign['total_prices'].toString(),
-                claimedPrices =
-                    campaigns[index - 1]['claimed_prices'].toString(),
-                totalPlayers = campaigns[index - 1]['total_players'].toString();
+                claimedPrices = campaign['claimed_prices'].toString(),
+                totalPlayers = campaign['total_players'].toString();
             return Container(
               width: 100,
               height: 100,
