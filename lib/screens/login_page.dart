@@ -7,6 +7,7 @@ import 'dart:convert';
 import '../utils/sys-config.dart';
 import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -66,8 +67,7 @@ class _LoginPageState extends State<LoginPage> {
           setState(() {
             warn = '';
           });
-          prefs.setBool('isLogged', false);
-          prefs.setInt('shop_id', resp['shop_id']);
+          prefs.setInt(Constants.shopId, resp['shop_id']);
           Navigator.pushReplacementNamed(ctx, '/home');
         } else {
           SnackBarTxt = resp['error'];

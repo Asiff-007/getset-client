@@ -4,6 +4,7 @@ import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import '../utils/sys-config.dart';
+import '../utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   Future<List<dynamic>> getCampaigns() async {
     final prefs = await SharedPreferences.getInstance();
     final apiurl = SysConfig.apiUrl;
-    var shopId = prefs.getInt('shop_id');
+    var shopId = prefs.getInt(Constants.shopId);
     try {
       final response = await http.get(
         Uri.parse('$apiurl/campaign/?shop_id=$shopId'),
@@ -59,7 +60,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     CheckConnection().checkConnection(context);
-    // getFuction();
 
     return WillPopScope(
       onWillPop: () async {
@@ -90,11 +90,11 @@ class _HomePageState extends State<HomePage> {
             future: getCampaigns(),
             builder: (context, campaignSnap) {
               if (campaignSnap.hasError) {
-                return const Center(
-                  child: Text('An error has occurred!'),
+                return Center(
+                  child: Text(tr('error_msg')),
                 );
               } else if (campaignSnap.hasData) {
-                return CampaignList(campaigns: campaignSnap.data!);
+                return CampaignListItem(campaigns: campaignSnap.data!);
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -106,8 +106,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class CampaignList extends StatelessWidget {
-  const CampaignList({required this.campaigns});
+class CampaignListItem extends StatelessWidget {
+  const CampaignListItem({required this.campaigns});
 
   final List<dynamic> campaigns;
 
@@ -129,13 +129,13 @@ class CampaignList extends StatelessWidget {
                   ),
                   elevation: 10,
                   child: Center(
-                    child: const ListTile(
+                    child: ListTile(
                       title: Icon(
                         Icons.add,
                         size: 100,
                       ),
                       subtitle: Text(
-                        'NEW CAMPAIGN',
+                        tr('new_campaign'),
                         style: TextStyle(fontSize: 15.0),
                         textAlign: TextAlign.center,
                       ),

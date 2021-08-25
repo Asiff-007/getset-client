@@ -3,12 +3,13 @@ import './screens/login_page.dart';
 import './screens/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../utils/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  final bool isLogged = prefs.getBool('isLogged') ?? false;
+  final bool isLogged = prefs.getBool(Constants.isLogged) ?? false;
   final MyApp myApp = MyApp(
     initialRoute: isLogged ? '/home' : '/login',
   );
