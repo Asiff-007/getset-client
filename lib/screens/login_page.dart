@@ -78,7 +78,6 @@ class _LoginPageState extends State<LoginPage> {
         snackBarTxt = tr('wrong_msg');
       }
     } catch (e) {
-      print(e);
       throw e;
     }
     ScaffoldMessenger.of(ctx)
