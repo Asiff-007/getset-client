@@ -121,10 +121,28 @@ class _LoginPageState extends State<LoginPage> {
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: TextFormField(
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(),
-                        labelText: tr('label_username'),
-                        hintText: tr('hint_username')),
+                      contentPadding: const EdgeInsets.all(10),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepPurpleAccent, width: 3)),
+                      labelText: tr('label_username'),
+                      hintText: tr('hint_username'),
+                      labelStyle:
+                          TextStyle(color: Colors.deepPurpleAccent[700]),
+                      errorStyle:
+                          TextStyle(color: Colors.deepPurpleAccent[700]),
+                    ),
                     onChanged: (value) {
                       this.userName = value;
                     },
@@ -143,10 +161,28 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(10),
-                        border: OutlineInputBorder(),
-                        labelText: tr('label_password'),
-                        hintText: tr('hint_password')),
+                      contentPadding: const EdgeInsets.all(10),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.deepPurpleAccent,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepPurpleAccent, width: 3)),
+                      labelText: tr('label_password'),
+                      hintText: tr('hint_password'),
+                      labelStyle:
+                          TextStyle(color: Colors.deepPurpleAccent[700]),
+                      errorStyle:
+                          TextStyle(color: Colors.deepPurpleAccent[700]),
+                    ),
                     onChanged: (value) {
                       this.passWord = value;
                     },

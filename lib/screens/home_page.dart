@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> {
             child: Icon(
               Icons.qr_code_2,
               color: Colors.black,
+              size: 30,
             ),
             onPressed: () {}),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -126,7 +127,7 @@ class CampaignListItem extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  elevation: 10,
+                  elevation: 7,
                   child: Center(
                     child: ListTile(
                       title: Icon(
@@ -135,36 +136,69 @@ class CampaignListItem extends StatelessWidget {
                       ),
                       subtitle: Text(
                         tr('new_campaign'),
-                        style: TextStyle(fontSize: 15.0),
+                        style: TextStyle(fontSize: 14.0),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
                 ));
           } else {
-            String campaignName = campaigns[index - 1]['campaign_name'];
-            String campaignStatus = campaigns[index - 1]['status'];
+            var campaign = campaigns[index - 1];
+            String campaignName = campaign['campaign_name'],
+                campaignStatus = campaign['status'],
+                totalPrices = campaign['total_prices'].toString(),
+                claimedPrices = campaign['claimed_prices'].toString(),
+                totalPlayers = campaign['total_players'].toString();
             return Container(
               width: 100,
               height: 100,
               padding: new EdgeInsets.all(5.0),
               child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                elevation: 10,
-                child: ListTile(
-                  title: Text(campaignName,
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center),
-                  subtitle: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(campaignStatus,
-                          style: TextStyle(fontSize: 15.0),
-                          textAlign: TextAlign.center)),
-                ),
-              ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  elevation: 7,
+                  child: Column(children: [
+                    Flexible(
+                      flex: 2,
+                      fit: FlexFit.tight,
+                      child: ListTile(
+                        title: Text(totalPlayers,
+                            style: TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center),
+                        subtitle: Text(tr('players_total'),
+                            style: TextStyle(fontSize: 14.0),
+                            textAlign: TextAlign.center),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      fit: FlexFit.tight,
+                      child: ListTile(
+                        title: Text(claimedPrices + '/' + totalPrices,
+                            style: TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center),
+                        subtitle: Text(tr('players_claimed'),
+                            style: TextStyle(fontSize: 14.0),
+                            textAlign: TextAlign.center),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 3,
+                      fit: FlexFit.tight,
+                      child: ListTile(
+                        title: Text(campaignName,
+                            style: TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center),
+                        subtitle: Text(campaignStatus,
+                            style: TextStyle(fontSize: 14.0),
+                            textAlign: TextAlign.center),
+                      ),
+                    )
+                  ])),
             );
           }
         });

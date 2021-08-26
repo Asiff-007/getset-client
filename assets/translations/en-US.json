@@ -18,6 +18,12 @@
     "validation_password":"Please enter password",
     "validation_username":"Please enter username",
 
-    "no_internet":"No internet connection"
+    "no_internet":"No internet connection",
+    "new_campaign":"NEW CAMPAIGN",
+
+    "error_msg":"An error has occurred!",
+
+    "players_total":"PLAYERS",
+    "players_claimed":"CLAIMED"
 
 }
