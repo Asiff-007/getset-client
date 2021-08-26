@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   String userName = '';
   String passWord = '';
   String warn = '';
-  String SnackBarTxt = '';
+  String snackBarTxt = '';
   bool shouldpop = false;
   bool connection = true;
 
@@ -61,27 +61,28 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         final resp = json.decode(response.body);
         if (resp['status'] == 'success') {
-          SnackBarTxt = tr('login_success');
+          snackBarTxt = tr('login_success');
           setState(() {
             warn = '';
           });
           prefs.setInt(Constants.shopId, resp['shop_id']);
+          prefs.setInt(Constants.adminId, resp['admin_id']);
           Navigator.pushReplacementNamed(ctx, '/home');
         } else {
-          SnackBarTxt = resp['error'];
+          snackBarTxt = resp['error'];
           setState(() {
             warn = resp['error'];
           });
         }
       } else {
-        SnackBarTxt = tr('login_wrong');
+        snackBarTxt = tr('wrong_msg');
       }
     } catch (e) {
       print(e);
       throw e;
     }
     ScaffoldMessenger.of(ctx)
-        .showSnackBar(SnackBar(content: Text(SnackBarTxt)));
+        .showSnackBar(SnackBar(content: Text(snackBarTxt)));
   }
 
   @override
@@ -138,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.deepPurpleAccent, width: 3)),
                       labelText: tr('label_username'),
                       hintText: tr('hint_username'),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelStyle:
                           TextStyle(color: Colors.deepPurpleAccent[700]),
                       errorStyle:
@@ -178,6 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.deepPurpleAccent, width: 3)),
                       labelText: tr('label_password'),
                       hintText: tr('hint_password'),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelStyle:
                           TextStyle(color: Colors.deepPurpleAccent[700]),
                       errorStyle:

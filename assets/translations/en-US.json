@@ -1,6 +1,5 @@
 {
     "login_success":"Login successful",
-    "login_wrong":"Something went wrong",
     "login_title":"Login",
     "login_button":"Login",
 
@@ -11,12 +10,23 @@
 
     "label_username":"Username",
     "label_password":"Password",
+    "label_campaign_name":"Campaign Name",
+    "label_campaign_startdate":"Start Date",
+    "label_campaign_enddate":"End Date",
+    "label_create":"CREATE",
 
     "hint_username":"Enter valid username",
     "hint_password":"Enter valid password",
+    "hint_campaign_name":"Enter Campaign Name",
+    "hint_campaign_startdate":"Enter campaign Starting Date",
+    "hint_campaign_enddate":"Enter campaign Ending date",
 
     "validation_password":"Please enter password",
     "validation_username":"Please enter username",
+    "validation_campaign_name":"Enter a name for your campaign",
+    "validation_campaign_startdate":"When will the campaign start to work",
+    "validation_campaign_enddate-1":"What is the last day of your campaign",
+    "validation_campaign_enddate-2":"Enter A Valid Ending Date",
 
     "no_internet":"No internet connection",
     "new_campaign":"NEW CAMPAIGN",
@@ -24,6 +34,12 @@
     "error_msg":"An error has occurred!",
 
     "players_total":"PLAYERS",
-    "players_claimed":"CLAIMED"
+    "players_claimed":"CLAIMED",
+
+    "campaign_created":"New Campaign Created",
+    "campaign_failed":"Campaign Creation Failed",
+    "campaign_appbar":"New Campaign",
+
+    "wrong_msg":"Something went wrong"
 
 }
