@@ -8,12 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
 
-class CampaignPage extends StatefulWidget {
+class CreateCampaign extends StatefulWidget {
   @override
-  _CampaignPageState createState() => _CampaignPageState();
+  _CreateCampaignState createState() => _CreateCampaignState();
 }
 
-class _CampaignPageState extends State<CampaignPage> {
+class _CreateCampaignState extends State<CreateCampaign> {
   final formKey = GlobalKey<FormState>();
   final txtCampaignName = TextEditingController();
   final txtCampaignFrom = TextEditingController();
@@ -23,16 +23,6 @@ class _CampaignPageState extends State<CampaignPage> {
   late DateTime campaignTo;
   late IconData snackBarIcon;
   late Color snackBarIconColor;
-
-  Future statusCheckFunction({@required campaignFrom, campaignTo}) async {
-    var today = DateTime.now();
-
-    if (campaignFrom.isBefore(today) && campaignTo.isAfter(today)) {
-      status = Constants.Active;
-    } else if (campaignFrom.isAfter(today)) {
-      status = Constants.Pending;
-    }
-  }
 
   void createCampaignFunction(
       {@required campaignName, campaignFrom, campaignTo, ctx}) async {
@@ -50,7 +40,6 @@ class _CampaignPageState extends State<CampaignPage> {
           'to': campaignTo,
           'shop_id': shopId,
           'admin_id': adminId,
-          'status': status
         },
       );
       if (response.statusCode == 200) {
@@ -223,11 +212,6 @@ class _CampaignPageState extends State<CampaignPage> {
                 child: FlatButton(
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        log(campaignFrom.toString());
-                        await statusCheckFunction(
-                          campaignFrom: this.campaignFrom,
-                          campaignTo: this.campaignTo,
-                        );
                         createCampaignFunction(
                             campaignName: this.campaignName,
                             campaignFrom: this.campaignFrom.toString(),

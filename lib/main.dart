@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './screens/login_page.dart';
 import './screens/home_page.dart';
-import './screens/campaign_page.dart';
+import 'screens/create_campaign.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../utils/constants.dart';
@@ -35,6 +35,6 @@ class MyApp extends StatelessWidget {
           routes: {
             '/login': (context) => LoginPage(),
             '/home': (context) => HomePage(),
-            '/campaign': (context) => CampaignPage(),
+            '/campaign': (context) => CreateCampaign(),
           });
 }
