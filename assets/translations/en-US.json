@@ -1,12 +1,14 @@
 {
     "login_success":"Login successful",
-    "login_title":"Login",
     "login_button":"Login",
 
     "alert":"Alert",
     "alert_exit":"Do you want to exit",
     "alert_ok":"Ok",
     "alert_cancel":"Cancel",
+    "appbar_campaign_add":"New Campaign",
+    "appbar_prize_add":"ADD A PRIZE",
+    "appbar_login":"Login",
 
     "label_username":"Username",
     "label_password":"Password",
@@ -14,12 +16,19 @@
     "label_campaign_startdate":"Start Date",
     "label_campaign_enddate":"End Date",
     "label_create":"CREATE",
+    "label_prize_name":"Prize Name",
+    "label_prize_quantity":"Prize Quantity",
+    "label_prize_expiry":"Prize Expiry",
+    "label_add_prize":"ADD PRIZE",
 
     "hint_username":"Enter valid username",
     "hint_password":"Enter valid password",
     "hint_campaign_name":"Enter Campaign Name",
     "hint_campaign_startdate":"Enter campaign Starting Date",
     "hint_campaign_enddate":"Enter campaign Ending date",
+    "hint_prize_name":"Enter Prize Name",
+    "hint_prize_quantity":"Enter Prize Quantity",
+    "hint_prize_expiry":"Select Prize Expiry Date",
 
     "validation_password":"Please enter password",
     "validation_username":"Please enter username",
@@ -27,6 +36,9 @@
     "validation_campaign_startdate":"When will the campaign start to work",
     "validation_campaign_enddate-1":"What is the last day of your campaign",
     "validation_campaign_enddate-2":"Enter A Valid Ending Date",
+    "validation_prize_name":"Enter A Name for Your Prize",
+    "validation_prize_quantity":"Enter The Quantity Of Your Prize",
+    "validation_prize_expiry":"Select The Expiry Date Of Your Prize",
 
     "no_internet":"No internet connection",
     "new_campaign":"NEW CAMPAIGN",
@@ -38,8 +50,13 @@
 
     "campaign_created":"New Campaign Created",
     "campaign_failed":"Campaign Creation Failed",
-    "campaign_appbar":"New Campaign",
 
-    "wrong_msg":"Something went wrong"
+    "wrong_msg":"Something went wrong",
+
+    "selected_image":"PHOTO OF PRIZE",
+    "select_image":"ADD PHOTO OF PRIZE",
+
+    "prize_added":"Prize Added successfully",
+    "prize_faild":"Adding Prize Failed"
 
 }

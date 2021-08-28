@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:retail_client/screens/add_price.dart';
 import './screens/login_page.dart';
 import './screens/home_page.dart';
 import 'screens/create_campaign.dart';
+import './screens/add_price.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../utils/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final bool isLogged = prefs.getBool(Constants.isLogged) ?? false;
@@ -36,5 +40,6 @@ class MyApp extends StatelessWidget {
             '/login': (context) => LoginPage(),
             '/home': (context) => HomePage(),
             '/campaign': (context) => CreateCampaign(),
+            '/add_price': (context) => AddPrice(),
           });
 }

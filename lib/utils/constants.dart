@@ -5,6 +5,8 @@ class Constants {
 
   static final String adminId = "adminId";
 
+  static final String campaignId = "campaignId";
+
   static final String Active = "ACTIVE";
 
   static final String Pending = "PENDING";
