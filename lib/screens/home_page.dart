@@ -124,24 +124,28 @@ class CampaignListItem extends StatelessWidget {
                 height: 100,
                 padding: new EdgeInsets.all(5.0),
                 child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  elevation: 7,
-                  child: Center(
-                    child: ListTile(
-                      title: Icon(
-                        Icons.add,
-                        size: 100,
-                      ),
-                      subtitle: Text(
-                        tr('new_campaign'),
-                        style: TextStyle(fontSize: 14.0),
-                        textAlign: TextAlign.center,
-                      ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                  ),
-                ));
+                    elevation: 7,
+                    child: InkWell(
+                      onTap: () async {
+                        Navigator.pushNamed(context, '/campaign');
+                      },
+                      child: Center(
+                        child: ListTile(
+                          title: Icon(
+                            Icons.add,
+                            size: 100,
+                          ),
+                          subtitle: Text(
+                            tr('new_campaign'),
+                            style: TextStyle(fontSize: 14.0),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    )));
           } else {
             var campaign = campaigns[index - 1];
             String campaignName = campaign['campaign_name'],
