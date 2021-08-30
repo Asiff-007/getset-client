@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/add_price.dart';
+import 'package:retail_client/utils/screen_arguments.dart';
 import './screens/login_page.dart';
 import './screens/home_page.dart';
 import 'screens/create_campaign.dart';
@@ -32,14 +33,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          initialRoute: initialRoute,
-          routes: {
-            '/login': (context) => LoginPage(),
-            '/home': (context) => HomePage(),
-            '/campaign': (context) => CreateCampaign(),
-            '/add_price': (context) => AddPrice(),
-          });
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        initialRoute: initialRoute,
+        routes: {
+          '/login': (context) => LoginPage(),
+          '/home': (context) => HomePage(),
+          '/campaign': (context) => CreateCampaign(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == '/add_price') {
+            final args = settings.arguments as ScreenArguments;
+            return MaterialPageRoute(
+              builder: (context) {
+                return AddPrice(
+                  campaignId: args.campaignId,
+                );
+              },
+            );
+          }
+        },
+      );
 }

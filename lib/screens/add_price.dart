@@ -13,6 +13,9 @@ import 'package:date_field/date_field.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class AddPrice extends StatefulWidget {
+  final String campaignId;
+
+  AddPrice({required this.campaignId});
   @override
   _AddPriceState createState() => _AddPriceState();
 }
@@ -49,17 +52,16 @@ class _AddPriceState extends State<AddPrice> {
     if (croppedImage != null) {
       setState(() {
         imagepath = croppedImage.path;
-        _img = croppedImage;
         warning = '';
       });
+      _img = croppedImage;
     }
   }
 
   Future uploadImage() async {
-    String fileName = _img.path.split('/').last;
-    final _firebaseStorage = FirebaseStorage.instance;
+    String fileName = imagepath.split('/').last;
     //Upload to Firebase
-    var snapshot = await _firebaseStorage
+    var snapshot = await FirebaseStorage.instance
         .ref()
         .child('retail_client/prize/$fileName')
         .putFile(_img);
@@ -72,39 +74,35 @@ class _AddPriceState extends State<AddPrice> {
 
   void addPrizeFunction(
       {@required prizeName, prizeQuantity, prizeExpiry, ctx}) async {
-    final prefs = await SharedPreferences.getInstance();
+    //final prefs = await SharedPreferences.getInstance();
     final apiurl = SysConfig.apiUrl;
-    var campaignId = prefs.getInt(Constants.campaignId).toString();
+    //var campaignId = prefs.getInt(Constants.campaignId).toString();
 
-    try {
-      final response = await http.post(
-        Uri.parse('$apiurl/price'),
-        body: {
-          'campaign_id': campaignId,
-          'name': prizeName,
-          'image': imageUrl,
-          'count': prizeQuantity,
-          'expiry': prizeExpiry,
-        },
-      );
-      if (response.statusCode == 200) {
-        final resp = json.decode(response.body);
-        if (resp['status'] == 'Data inserted') {
-          snackBarTxt = tr('prize_added');
-          snackBarIcon = Icons.check_circle;
-          snackBarIconColor = Colors.green;
-        } else {
-          snackBarTxt = tr('prize_faild');
-          snackBarIcon = Icons.close;
-          snackBarIconColor = Colors.red;
-        }
+    final response = await http.post(
+      Uri.parse('$apiurl/price'),
+      body: {
+        'campaign_id': widget.campaignId,
+        'name': prizeName,
+        'image': imageUrl,
+        'count': prizeQuantity,
+        'expiry': prizeExpiry,
+      },
+    );
+    if (response.statusCode == 200) {
+      final resp = json.decode(response.body);
+      if (resp['status'] == 'Data inserted') {
+        snackBarTxt = tr('prize_added');
+        snackBarIcon = Icons.check_circle;
+        snackBarIconColor = Colors.green;
       } else {
-        snackBarTxt = tr('wrong_msg');
-        snackBarIcon = Icons.warning;
+        snackBarTxt = tr('prize_faild');
+        snackBarIcon = Icons.close;
         snackBarIconColor = Colors.red;
       }
-    } catch (e) {
-      throw e;
+    } else {
+      snackBarTxt = tr('wrong_msg');
+      snackBarIcon = Icons.warning;
+      snackBarIconColor = Colors.red;
     }
     ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
         content: Row(children: [
