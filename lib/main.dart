@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/add_price.dart';
-import 'package:retail_client/utils/screen_arguments.dart';
+import 'package:retail_client/screens/wrapper.dart';
+import 'package:retail_client/utils/campaign_arguments.dart';
 import './screens/login_page.dart';
 import './screens/home_page.dart';
 import 'screens/create_campaign.dart';
-import './screens/add_price.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../utils/constants.dart';
@@ -44,12 +44,20 @@ class MyApp extends StatelessWidget {
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/add_price') {
-            final args = settings.arguments as ScreenArguments;
+            final args = settings.arguments as CampaignArguments;
             return MaterialPageRoute(
               builder: (context) {
                 return AddPrice(
                   campaignId: args.campaignId,
                 );
+              },
+            );
+          }
+          if (settings.name == '/wrapper') {
+            final args = settings.arguments as CampaignArguments;
+            return MaterialPageRoute(
+              builder: (context) {
+                return Wrapper(campaignId: args.campaignId, index: args.index);
               },
             );
           }
