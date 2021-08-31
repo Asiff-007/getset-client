@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent[700],
-          title: Text(tr('login_title')),
+          title: Text(tr('appbar_login')),
         ),
         body: SingleChildScrollView(
           child: Form(

@@ -1,0 +1,138 @@
+{
+  "project_info": {
+    "project_number": "812297999506",
+    "firebase_url": "https://keralaweather-d92fc.firebaseio.com",
+    "project_id": "keralaweather-d92fc",
+    "storage_bucket": "keralaweather-d92fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812297999506:android:9b92c3c47a2926cc16024b",
+        "android_client_info": {
+          "package_name": "com.example.retail_client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812297999506-vm9vp6bcdha3v0ptffcmm3d1ap7m12ss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuiPEEzyg1AGz4vElsDjitPaS0cGmztlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812297999506-vm9vp6bcdha3v0ptffcmm3d1ap7m12ss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812297999506:android:21a7a2491eff132616024b",
+        "android_client_info": {
+          "package_name": "com.example.ritu_admin_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812297999506-vm9vp6bcdha3v0ptffcmm3d1ap7m12ss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuiPEEzyg1AGz4vElsDjitPaS0cGmztlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812297999506-vm9vp6bcdha3v0ptffcmm3d1ap7m12ss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812297999506:android:38bcf84fb378a70a16024b",
+        "android_client_info": {
+          "package_name": "com.popcode.keralaweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812297999506-13cbkgfit7mcs5fet7ldv7g5jvf3oe3d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.popcode.keralaweather",
+            "certificate_hash": "5baa4c8620e03e2693dcbfb9b185ab7422ecca8f"
+          }
+        },
+        {
+          "client_id": "812297999506-7fpbh6s8as0k15ebu43q8ja5k4no49r7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.popcode.keralaweather",
+            "certificate_hash": "a764754e957ac9940653509dbaa8bd9a36f34577"
+          }
+        },
+        {
+          "client_id": "812297999506-bf1o60r1cp37n1crt2u5m6n4iu2tagq0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.popcode.keralaweather",
+            "certificate_hash": "81b50b046057b4fce39cf82fcd52e6a3ee668a7e"
+          }
+        },
+        {
+          "client_id": "812297999506-m2mejqgkbh7hqto387ehmoqi8e2abidt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.popcode.keralaweather",
+            "certificate_hash": "cef268af71bf5796801ee801b84872d17dc84b1a"
+          }
+        },
+        {
+          "client_id": "812297999506-vk54knoakkm4mspi63qptvuesj1vmqei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.popcode.keralaweather",
+            "certificate_hash": "16e88e8b6dfe66eaa88ba8f769b2fb345f33a727"
+          }
+        },
+        {
+          "client_id": "812297999506-vm9vp6bcdha3v0ptffcmm3d1ap7m12ss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuiPEEzyg1AGz4vElsDjitPaS0cGmztlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812297999506-vm9vp6bcdha3v0ptffcmm3d1ap7m12ss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
