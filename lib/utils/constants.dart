@@ -10,4 +10,8 @@ class Constants {
   static final String Active = "ACTIVE";
 
   static final String Pending = "PENDING";
+
+  static final int prizeIndex = 1;
+
+  static final int campaignIndex = 1;
 }

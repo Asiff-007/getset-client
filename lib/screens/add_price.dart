@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:retail_client/utils/campaign_arguments.dart';
+import 'package:retail_client/screens/screen_arguments/campaign_arguments.dart';
 import '../utils/sys-config.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -74,10 +72,7 @@ class _AddPriceState extends State<AddPrice> {
 
   void addPrizeFunction(
       {@required prizeName, prizeQuantity, prizeExpiry, ctx}) async {
-    //final prefs = await SharedPreferences.getInstance();
     final apiurl = SysConfig.apiUrl;
-    final int index = 2;
-    //var campaignId = prefs.getInt(Constants.campaignId).toString();
 
     final response = await http.post(
       Uri.parse('$apiurl/price'),
@@ -96,7 +91,8 @@ class _AddPriceState extends State<AddPrice> {
         snackBarIcon = Icons.check_circle;
         snackBarIconColor = Colors.green;
         Navigator.pushNamed(context, '/wrapper',
-            arguments: CampaignArguments(widget.campaignId, index));
+            arguments:
+                CampaignArguments(widget.campaignId, Constants.prizeIndex));
       } else {
         snackBarTxt = tr('prize_faild');
         snackBarIcon = Icons.close;

@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:date_field/date_field.dart';
-import 'package:retail_client/utils/campaign_arguments.dart';
+import 'package:retail_client/screens/screen_arguments/campaign_arguments.dart';
 import '../utils/sys-config.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,15 +44,14 @@ class _CreateCampaignState extends State<CreateCampaign> {
       );
       if (response.statusCode == 200) {
         final resp = json.decode(response.body);
-        final int index = 1;
         if (resp['status'] == 'Data inserted') {
           //prefs.setInt(Constants.campaignId, resp['campaign_id']);
           snackBarTxt = tr('campaign_created');
           snackBarIcon = Icons.check_circle;
           snackBarIconColor = Colors.green;
           Navigator.pushReplacementNamed(ctx, '/wrapper',
-              arguments:
-                  CampaignArguments(resp['campaign_id'].toString(), index));
+              arguments: CampaignArguments(
+                  resp['campaign_id'].toString(), Constants.prizeIndex));
         } else {
           snackBarTxt = tr('campaign_failed');
           snackBarIcon = Icons.close;

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/add_price.dart';
+import 'package:retail_client/screens/screen_arguments/add_price_arguments.dart';
 import 'package:retail_client/screens/wrapper.dart';
-import 'package:retail_client/utils/campaign_arguments.dart';
+import 'package:retail_client/screens/screen_arguments/campaign_arguments.dart';
 import './screens/login_page.dart';
 import './screens/home_page.dart';
 import 'screens/create_campaign.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/add_price') {
-            final args = settings.arguments as CampaignArguments;
+            final args = settings.arguments as AddPrizeArguments;
             return MaterialPageRoute(
               builder: (context) {
                 return AddPrice(
