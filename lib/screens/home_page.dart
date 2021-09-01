@@ -7,6 +7,8 @@ import '../utils/sys-config.dart';
 import '../utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'args/campaign_args.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -67,16 +69,21 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         bottomNavigationBar: BottomAppBar(
-          color: Colors.deepPurpleAccent[700],
-          child: Row(
-            children: [
-              IconButton(
-                  color: Colors.white,
-                  icon: Icon(Icons.menu),
-                  onPressed: () {}),
-            ],
-          ),
-        ),
+            shape: CircularNotchedRectangle(),
+            notchMargin: 5,
+            elevation: 7,
+            color: Colors.deepPurpleAccent[700],
+            child: Container(
+              height: 55,
+              child: Row(
+                children: [
+                  IconButton(
+                      color: Colors.white,
+                      icon: Icon(Icons.menu),
+                      onPressed: () {}),
+                ],
+              ),
+            )),
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.tealAccent[700],
             child: Icon(
@@ -125,8 +132,8 @@ class CampaignListItem extends StatelessWidget {
                 padding: new EdgeInsets.all(5.0),
                 child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+                        borderRadius: BorderRadius.circular(15.0),
+                        side: BorderSide(width: 1)),
                     elevation: 7,
                     child: InkWell(
                       onTap: () async {
@@ -152,7 +159,8 @@ class CampaignListItem extends StatelessWidget {
                 campaignStatus = campaign['status'],
                 totalPrices = campaign['total_prices'].toString(),
                 claimedPrices = campaign['claimed_prices'].toString(),
-                totalPlayers = campaign['total_players'].toString();
+                totalPlayers = campaign['total_players'].toString(),
+                campaignId = campaign['id'].toString();
             return Container(
               width: 100,
               height: 100,
@@ -162,47 +170,56 @@ class CampaignListItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   elevation: 7,
-                  child: Column(children: [
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: ListTile(
-                        title: Text(totalPlayers,
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
-                        subtitle: Text(tr('players_total'),
-                            style: TextStyle(fontSize: 14.0),
-                            textAlign: TextAlign.center),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: ListTile(
-                        title: Text(claimedPrices + '/' + totalPrices,
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
-                        subtitle: Text(tr('players_claimed'),
-                            style: TextStyle(fontSize: 14.0),
-                            textAlign: TextAlign.center),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 3,
-                      fit: FlexFit.tight,
-                      child: ListTile(
-                        title: Text(campaignName,
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
-                        subtitle: Text(campaignStatus,
-                            style: TextStyle(fontSize: 14.0),
-                            textAlign: TextAlign.center),
-                      ),
-                    )
-                  ])),
+                  child: InkWell(
+                      onTap: () async {
+                        Navigator.pushNamed(context, '/wrapper',
+                            arguments: CampaignArguments(
+                                campaignId, Constants.prizeIndex));
+                      },
+                      child: Column(children: [
+                        Flexible(
+                          flex: 2,
+                          fit: FlexFit.tight,
+                          child: ListTile(
+                            title: Text(totalPlayers,
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center),
+                            subtitle: Text(tr('players_total'),
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.center),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 2,
+                          fit: FlexFit.tight,
+                          child: ListTile(
+                            title: Text(claimedPrices + '/' + totalPrices,
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center),
+                            subtitle: Text(tr('players_claimed'),
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.center),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 3,
+                          fit: FlexFit.tight,
+                          child: ListTile(
+                            title: Text(campaignName,
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center),
+                            subtitle: Text(campaignStatus,
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.center),
+                          ),
+                        )
+                      ]))),
             );
           }
         });

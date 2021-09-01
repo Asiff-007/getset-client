@@ -85,46 +85,71 @@ class _ListPrizeState extends State<ListPrize> {
                         prizeStatus = prize['status'],
                         prizeCount = prize['count'].toString(),
                         prizeImage = prize['image'];
+                    bool switchStatus = prizeStatus == 'Active' ? true : false;
                     return Container(
                       width: 100,
-                      height: 300,
-                      padding: new EdgeInsets.all(5.0),
+                      height: 250,
+                      padding: new EdgeInsets.only(
+                          left: 25.0, right: 25, top: 4, bottom: 4),
                       child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          elevation: 7,
-                          child: Column(children: [
-                            Flexible(
-                              flex: 4,
-                              fit: FlexFit.tight,
-                              child: CircleAvatar(
-                                  radius: 150,
-                                  backgroundColor: Colors.transparent,
-                                  child: Image.network(
-                                    prizeImage,
-                                    fit: BoxFit.cover,
-                                  )),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              fit: FlexFit.loose,
-                              child: Text(prizeName,
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              fit: FlexFit.loose,
-                              child: Text(prizeCount,
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center),
-                            )
-                          ])),
+                          elevation: 3,
+                          child: Padding(
+                              padding: EdgeInsets.only(bottom: 15),
+                              child: Column(children: [
+                                SizedBox(
+                                  height: 0,
+                                ),
+                                Flexible(
+                                  flex: 4,
+                                  fit: FlexFit.loose,
+                                  child: CircleAvatar(
+                                      radius: 80,
+                                      backgroundColor: Colors.transparent,
+                                      child: Image.network(
+                                        prizeImage,
+                                        fit: BoxFit.cover,
+                                      )),
+                                ),
+                                Flexible(
+                                    flex: 1,
+                                    fit: FlexFit.loose,
+                                    child: Row(children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                          child: ListTile(
+                                        title: Text(
+                                          prizeName,
+                                          style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Text(
+                                          prizeCount,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      )),
+                                      Switch(
+                                        value: switchStatus,
+                                        activeColor:
+                                            Colors.deepPurpleAccent[700],
+                                        activeTrackColor:
+                                            Colors.deepPurpleAccent[300],
+                                        onChanged: (value) {
+                                          switchStatus = !value;
+                                        },
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      )
+                                    ])),
+                              ]))),
                     );
                   });
             }
