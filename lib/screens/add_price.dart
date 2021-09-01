@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:retail_client/screens/screen_arguments/campaign_arguments.dart';
+import 'package:retail_client/screens/args/campaign_arguments.dart';
 import '../utils/sys-config.dart';
 import 'package:http/http.dart' as http;
 import '../utils/constants.dart';

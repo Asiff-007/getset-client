@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:retail_client/screens/screen_arguments/add_price_arguments.dart';
+import 'package:retail_client/screens/args/add_price_args.dart';
 import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;

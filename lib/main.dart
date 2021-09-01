@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/add_price.dart';
-import 'package:retail_client/screens/screen_arguments/add_price_arguments.dart';
+import 'package:retail_client/screens/args/add_price_args.dart';
+import 'package:retail_client/screens/args/campaign_args.dart';
 import 'package:retail_client/screens/wrapper.dart';
-import 'package:retail_client/screens/screen_arguments/campaign_arguments.dart';
 import './screens/login_page.dart';
 import './screens/home_page.dart';
 import 'screens/create_campaign.dart';
