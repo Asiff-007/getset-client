@@ -82,7 +82,7 @@ class _WrapperState extends State<Wrapper> {
                 size: 30,
               ),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/add_price',
+                Navigator.pushNamed(context, '/add_price',
                     arguments: AddPrizeArguments(campaignId.toString()));
               })
           : FloatingActionButton(
