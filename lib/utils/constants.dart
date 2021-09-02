@@ -7,9 +7,11 @@ class Constants {
 
   static final String campaignId = "campaignId";
 
-  static final String Active = "ACTIVE";
+  static final String Active = "Active";
 
-  static final String Pending = "PENDING";
+  static final String Pending = "Pending";
+
+  static final String InActive = "InActive";
 
   static final int prizeIndex = 1;
 
