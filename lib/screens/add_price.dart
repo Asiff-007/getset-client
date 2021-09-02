@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:retail_client/screens/args/campaign_arguments.dart';
+import 'package:flutter/services.dart';
+import 'package:retail_client/screens/args/campaign_args.dart';
 import '../utils/sys-config.dart';
 import 'package:http/http.dart' as http;
 import '../utils/constants.dart';
@@ -90,7 +91,7 @@ class _AddPriceState extends State<AddPrice> {
         snackBarTxt = tr('prize_added');
         snackBarIcon = Icons.check_circle;
         snackBarIconColor = Colors.green;
-        Navigator.pushNamed(context, '/wrapper',
+        Navigator.pushReplacementNamed(context, '/wrapper',
             arguments:
                 CampaignArguments(widget.campaignId, Constants.prizeIndex));
       } else {
@@ -188,6 +189,10 @@ class _AddPriceState extends State<AddPrice> {
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                     errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                  ],
                   onChanged: (value) {
                     this.prizeQuantity = value;
                   },

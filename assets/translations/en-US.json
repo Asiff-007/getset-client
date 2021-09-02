@@ -57,6 +57,7 @@
     "select_image":"ADD PHOTO OF PRIZE",
 
     "prize_added":"Prize Added successfully",
-    "prize_faild":"Adding Prize Failed"
+    "prize_faild":"Adding Prize Failed",
+    "prize_quantity":"Quantity"
 
 }

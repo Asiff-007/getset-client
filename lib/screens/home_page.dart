@@ -7,6 +7,8 @@ import '../utils/sys-config.dart';
 import '../utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'args/campaign_args.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -14,6 +16,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool shouldpop = false;
+
+  Future onGoBack(dynamic value) async {
+    setState(() {});
+  }
 
   Future onBackPress({ctx}) async {
     await showDialog<String>(
@@ -67,16 +73,21 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         bottomNavigationBar: BottomAppBar(
-          color: Colors.deepPurpleAccent[700],
-          child: Row(
-            children: [
-              IconButton(
-                  color: Colors.white,
-                  icon: Icon(Icons.menu),
-                  onPressed: () {}),
-            ],
-          ),
-        ),
+            shape: CircularNotchedRectangle(),
+            notchMargin: 5,
+            elevation: 7,
+            color: Colors.deepPurpleAccent[700],
+            child: Container(
+              height: 55,
+              child: Row(
+                children: [
+                  IconButton(
+                      color: Colors.white,
+                      icon: Icon(Icons.menu),
+                      onPressed: () {}),
+                ],
+              ),
+            )),
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.tealAccent[700],
             child: Icon(
@@ -94,7 +105,117 @@ class _HomePageState extends State<HomePage> {
                   child: Text(tr('error_msg')),
                 );
               } else if (campaignSnap.hasData) {
-                return CampaignListItem(campaigns: campaignSnap.data!);
+                var campaigns = campaignSnap.data!;
+                return GridView.builder(
+                    itemCount: campaigns.length + 1,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 2.0,
+                        mainAxisSpacing: 2.0),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == 0) {
+                        return Container(
+                            width: 100,
+                            height: 100,
+                            padding: new EdgeInsets.all(5.0),
+                            child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    side: BorderSide(width: 1)),
+                                elevation: 7,
+                                child: InkWell(
+                                  onTap: () async {
+                                    Navigator.pushNamed(context, '/campaign')
+                                        .then(onGoBack);
+                                  },
+                                  child: Center(
+                                    child: ListTile(
+                                      title: Icon(
+                                        Icons.add,
+                                        size: 100,
+                                      ),
+                                      subtitle: Text(
+                                        tr('new_campaign'),
+                                        style: TextStyle(fontSize: 14.0),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                )));
+                      } else {
+                        var campaign = campaigns[index - 1];
+                        String campaignName = campaign['campaign_name'],
+                            campaignStatus = campaign['status'],
+                            totalPrices = campaign['total_prices'].toString(),
+                            claimedPrices =
+                                campaign['claimed_prices'].toString(),
+                            totalPlayers = campaign['total_players'].toString(),
+                            campaignId = campaign['id'].toString();
+                        return Container(
+                          width: 100,
+                          height: 100,
+                          padding: new EdgeInsets.all(5.0),
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              elevation: 7,
+                              child: InkWell(
+                                  onTap: () async {
+                                    Navigator.pushNamed(context, '/wrapper',
+                                            arguments: CampaignArguments(
+                                                campaignId,
+                                                Constants.prizeIndex))
+                                        .then(onGoBack);
+                                  },
+                                  child: Column(children: [
+                                    Flexible(
+                                      flex: 2,
+                                      fit: FlexFit.tight,
+                                      child: ListTile(
+                                        title: Text(totalPlayers,
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center),
+                                        subtitle: Text(tr('players_total'),
+                                            style: TextStyle(fontSize: 14.0),
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      fit: FlexFit.tight,
+                                      child: ListTile(
+                                        title: Text(
+                                            claimedPrices + '/' + totalPrices,
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center),
+                                        subtitle: Text(tr('players_claimed'),
+                                            style: TextStyle(fontSize: 14.0),
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 3,
+                                      fit: FlexFit.tight,
+                                      child: ListTile(
+                                        title: Text(campaignName,
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center),
+                                        subtitle: Text(campaignStatus,
+                                            style: TextStyle(fontSize: 14.0),
+                                            textAlign: TextAlign.center),
+                                      ),
+                                    )
+                                  ]))),
+                        );
+                      }
+                    });
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -103,108 +224,5 @@ class _HomePageState extends State<HomePage> {
             }),
       ),
     );
-  }
-}
-
-class CampaignListItem extends StatelessWidget {
-  const CampaignListItem({required this.campaigns});
-
-  final List<dynamic> campaigns;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        itemCount: campaigns.length + 1,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 2.0, mainAxisSpacing: 2.0),
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            return Container(
-                width: 100,
-                height: 100,
-                padding: new EdgeInsets.all(5.0),
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    elevation: 7,
-                    child: InkWell(
-                      onTap: () async {
-                        Navigator.pushNamed(context, '/campaign');
-                      },
-                      child: Center(
-                        child: ListTile(
-                          title: Icon(
-                            Icons.add,
-                            size: 100,
-                          ),
-                          subtitle: Text(
-                            tr('new_campaign'),
-                            style: TextStyle(fontSize: 14.0),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    )));
-          } else {
-            var campaign = campaigns[index - 1];
-            String campaignName = campaign['campaign_name'],
-                campaignStatus = campaign['status'],
-                totalPrices = campaign['total_prices'].toString(),
-                claimedPrices = campaign['claimed_prices'].toString(),
-                totalPlayers = campaign['total_players'].toString();
-            return Container(
-              width: 100,
-              height: 100,
-              padding: new EdgeInsets.all(5.0),
-              child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  elevation: 7,
-                  child: Column(children: [
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: ListTile(
-                        title: Text(totalPlayers,
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
-                        subtitle: Text(tr('players_total'),
-                            style: TextStyle(fontSize: 14.0),
-                            textAlign: TextAlign.center),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: ListTile(
-                        title: Text(claimedPrices + '/' + totalPrices,
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
-                        subtitle: Text(tr('players_claimed'),
-                            style: TextStyle(fontSize: 14.0),
-                            textAlign: TextAlign.center),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 3,
-                      fit: FlexFit.tight,
-                      child: ListTile(
-                        title: Text(campaignName,
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
-                        subtitle: Text(campaignStatus,
-                            style: TextStyle(fontSize: 14.0),
-                            textAlign: TextAlign.center),
-                      ),
-                    )
-                  ])),
-            );
-          }
-        });
   }
 }

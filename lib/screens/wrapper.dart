@@ -1,5 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:retail_client/screens/args/add_price_args.dart';
 import './list_price.dart';
 
 class Wrapper extends StatefulWidget {
@@ -14,9 +14,17 @@ class _WrapperState extends State<Wrapper> {
   late int _currentIndex = widget.index;
   late int campaignId = int.parse(widget.campaignId);
   late List<Widget> _children = [
+    Center(
+        child: Text(
+      'Campaign Details',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+    )),
     ListPrize(campaignId: campaignId),
-    ListPrize(campaignId: campaignId),
-    ListPrize(campaignId: campaignId),
+    Center(
+        child: Text('Edit Campaign',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35))),
   ];
 
   void onTabTapped(int index) {
@@ -29,29 +37,42 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white54,
-          onTap: onTabTapped,
-          currentIndex: _currentIndex,
-          showUnselectedLabels: true,
-          showSelectedLabels: true,
-          backgroundColor: Colors.deepPurpleAccent[700],
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.wb_cloudy),
-              label: tr('campaign'),
+      bottomNavigationBar: BottomAppBar(
+          color: Colors.deepPurpleAccent[700],
+          shape: CircularNotchedRectangle(),
+          notchMargin: 5,
+          elevation: 7,
+          child: Container(
+            height: 55,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.campaign,
+                      color:
+                          _currentIndex == 0 ? Colors.white : Colors.white54),
+                  onPressed: () {
+                    onTabTapped(0);
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.card_giftcard,
+                      color:
+                          _currentIndex == 1 ? Colors.white : Colors.white54),
+                  onPressed: () {
+                    onTabTapped(1);
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.edit,
+                      color:
+                          _currentIndex == 2 ? Colors.white : Colors.white54),
+                  onPressed: () {
+                    onTabTapped(2);
+                  },
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.map_outlined),
-              label: tr('prize'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.local_hospital),
-              label: tr('edit'),
-            ),
-          ],
-          iconSize: 25),
+          )),
       floatingActionButton: _currentIndex == 1
           ? FloatingActionButton(
               backgroundColor: Colors.tealAccent[700],
@@ -60,7 +81,10 @@ class _WrapperState extends State<Wrapper> {
                 color: Colors.black,
                 size: 30,
               ),
-              onPressed: () {})
+              onPressed: () {
+                Navigator.pushNamed(context, '/add_price',
+                    arguments: AddPrizeArguments(campaignId.toString()));
+              })
           : FloatingActionButton(
               backgroundColor: Colors.tealAccent[700],
               child: Icon(
