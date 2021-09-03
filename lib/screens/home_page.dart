@@ -16,8 +16,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool shouldpop = false;
-
-  Future onGoBack(dynamic value) async {
+  //Function for refresh This page on return to this page
+  Future onReturn(dynamic value) async {
     setState(() {});
   }
 
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                                 child: InkWell(
                                   onTap: () async {
                                     Navigator.pushNamed(context, '/campaign')
-                                        .then(onGoBack);
+                                        .then(onReturn);
                                   },
                                   child: Center(
                                     child: ListTile(
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                                             arguments: CampaignArguments(
                                                 campaignId,
                                                 Constants.prizeIndex))
-                                        .then(onGoBack);
+                                        .then(onReturn);
                                   },
                                   child: Column(children: [
                                     Flexible(

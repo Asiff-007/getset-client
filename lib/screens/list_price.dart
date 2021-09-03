@@ -6,6 +6,7 @@ import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import '../utils/sys-config.dart';
+import '../utils/constants.dart';
 
 class ListPrize extends StatefulWidget {
   final int campaignId;
@@ -31,6 +32,18 @@ class _ListPrizeState extends State<ListPrize> {
     } catch (e) {
       throw e;
     }
+  }
+
+  updatePrize({@required prizeId, value}) async {
+    final apiurl = SysConfig.apiUrl;
+    final String status = value == true ? Constants.Active : Constants.InActive;
+
+    await http.post(
+      Uri.parse('$apiurl/price/$prizeId'),
+      body: {
+        'status': status,
+      },
+    );
   }
 
   @override
@@ -98,8 +111,9 @@ class _ListPrizeState extends State<ListPrize> {
                             prizeStatus = prize['status'],
                             prizeCount = prize['count'].toString(),
                             prizeImage = prize['image'];
+                        var prizeId = prize['id'];
                         switchStatus =
-                            prize['status'] == 'Active' ? true : false;
+                            prizeStatus == Constants.Active ? true : false;
                         return Container(
                           width: 100,
                           height: 250,
@@ -157,10 +171,13 @@ class _ListPrizeState extends State<ListPrize> {
                                                 Colors.deepPurpleAccent[700],
                                             activeTrackColor:
                                                 Colors.deepPurpleAccent[300],
-                                            onChanged: (value) {
-                                              log(value.toString());
-                                              log(switchStatus.toString());
-                                              switchStatus = value;
+                                            onChanged: (value) async {
+                                              await updatePrize(
+                                                  prizeId: prizeId,
+                                                  value: value);
+                                              setState(() {
+                                                switchStatus = value;
+                                              });
                                             },
                                           ),
                                           SizedBox(
