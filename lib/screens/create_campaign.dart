@@ -33,6 +33,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
   late IconData snackBarIcon;
   late Color snackBarIconColor;
   late int campaignId = widget.campaignId;
+  late bool editStatus = campaignId > 0 ? true : false;
 
   void createCampaignFunction(
       {@required campaignName, campaignFrom, campaignTo, ctx}) async {
@@ -122,7 +123,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent[700],
-        title: Text(campaignId > 0
+        title: Text(editStatus
             ? tr('appbar_campaign_edit')
             : tr('appbar_campaign_add')),
       ),
@@ -159,7 +160,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                     errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
-                  initialValue: campaignId > 0 ? widget.campaignName : '',
+                  initialValue: editStatus ? widget.campaignName : '',
                   onChanged: (value) {
                     this.campaignName = value;
                   },
@@ -198,7 +199,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   mode: DateTimeFieldPickerMode.date,
-                  initialValue: campaignId > 0 ? widget.from : null,
+                  initialValue: editStatus ? widget.from : null,
                   validator: (value) {
                     if (value == null) {
                       return tr('validation_campaign_startdate');
@@ -237,7 +238,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   mode: DateTimeFieldPickerMode.date,
-                  initialValue: campaignId > 0 ? widget.to : null,
+                  initialValue: editStatus ? widget.to : null,
                   validator: (value) {
                     if (value == null) {
                       return tr('validation_campaign_enddate-1');
@@ -262,7 +263,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                 decoration: BoxDecoration(
                     color: Colors.tealAccent[400],
                     borderRadius: BorderRadius.circular(20)),
-                child: campaignId > 0
+                child: editStatus
                     ? FlatButton(
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
