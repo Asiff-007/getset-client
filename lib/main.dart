@@ -41,7 +41,12 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (context) => LoginPage(),
           '/home': (context) => HomePage(),
-          '/campaign': (context) => CreateCampaign(),
+          '/campaign': (context) => CreateCampaign(
+                campaignId: 0,
+                campaignName: '',
+                from: DateTime.now(),
+                to: DateTime.now(),
+              ),
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/add_price') {
@@ -58,7 +63,12 @@ class MyApp extends StatelessWidget {
             final args = settings.arguments as CampaignArguments;
             return MaterialPageRoute(
               builder: (context) {
-                return Wrapper(campaignId: args.campaignId, index: args.index);
+                return Wrapper(
+                    campaignId: args.campaignId,
+                    campaignName: args.campaignName,
+                    from: args.from,
+                    to: args.to,
+                    index: args.index);
               },
             );
           }

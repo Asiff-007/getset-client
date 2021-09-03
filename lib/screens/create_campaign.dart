@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:date_field/date_field.dart';
@@ -9,20 +10,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/constants.dart';
 
 class CreateCampaign extends StatefulWidget {
+  int campaignId;
+  String campaignName;
+  final DateTime from, to;
+
+  CreateCampaign(
+      {required this.campaignId,
+      required this.campaignName,
+      required this.from,
+      required this.to});
+
   @override
   _CreateCampaignState createState() => _CreateCampaignState();
 }
 
 class _CreateCampaignState extends State<CreateCampaign> {
   final formKey = GlobalKey<FormState>();
-  final txtCampaignName = TextEditingController();
-  final txtCampaignFrom = TextEditingController();
-  String campaignName = '', snackBarTxt = '';
+  late String campaignName = widget.campaignName, snackBarTxt = '';
   late String status;
-  late DateTime campaignFrom;
-  late DateTime campaignTo;
+  late DateTime campaignFrom = widget.from;
+  late DateTime campaignTo = widget.to;
   late IconData snackBarIcon;
   late Color snackBarIconColor;
+  late int campaignId = widget.campaignId;
+  late bool editStatus = campaignId > 0 ? true : false;
 
   void createCampaignFunction(
       {@required campaignName, campaignFrom, campaignTo, ctx}) async {
@@ -31,39 +42,74 @@ class _CreateCampaignState extends State<CreateCampaign> {
     var shopId = prefs.getInt(Constants.shopId).toString(),
         adminId = prefs.getInt(Constants.adminId).toString();
 
-    try {
-      final response = await http.post(
-        Uri.parse('$apiurl/campaign'),
-        body: {
-          'campaign_name': campaignName,
-          'from': campaignFrom,
-          'to': campaignTo,
-          'shop_id': shopId,
-          'admin_id': adminId,
-        },
-      );
-      if (response.statusCode == 200) {
-        final resp = json.decode(response.body);
-        if (resp['status'] == 'Data inserted') {
-          //prefs.setInt(Constants.campaignId, resp['campaign_id']);
-          snackBarTxt = tr('campaign_created');
-          snackBarIcon = Icons.check_circle;
-          snackBarIconColor = Colors.green;
-          Navigator.pushReplacementNamed(ctx, '/wrapper',
-              arguments: CampaignArguments(
-                  resp['campaign_id'].toString(), Constants.prizeIndex));
-        } else {
-          snackBarTxt = tr('campaign_failed');
-          snackBarIcon = Icons.close;
-          snackBarIconColor = Colors.red;
-        }
+    final response = await http.post(
+      Uri.parse('$apiurl/campaign'),
+      body: {
+        'campaign_name': campaignName,
+        'from': campaignFrom,
+        'to': campaignTo,
+        'shop_id': shopId,
+        'admin_id': adminId,
+      },
+    );
+    if (response.statusCode == 200) {
+      final resp = json.decode(response.body);
+      if (resp['status'] == 'Data inserted') {
+        snackBarTxt = tr('campaign_created');
+        snackBarIcon = Icons.check_circle;
+        snackBarIconColor = Colors.green;
+        Navigator.pushReplacementNamed(ctx, '/wrapper',
+            arguments: CampaignArguments(
+                resp['campaign_id'].toString(),
+                campaignName,
+                campaignFrom.toString(),
+                campaignTo.toString(),
+                Constants.prizeIndex));
       } else {
-        snackBarTxt = tr('wrong_msg');
-        snackBarIcon = Icons.warning;
+        snackBarTxt = tr('campaign_creation_failed');
+        snackBarIcon = Icons.close;
         snackBarIconColor = Colors.red;
       }
-    } catch (e) {
-      throw e;
+    } else {
+      snackBarTxt = tr('wrong_msg');
+      snackBarIcon = Icons.warning;
+      snackBarIconColor = Colors.red;
+    }
+    ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+        content: Row(children: [
+      Text(snackBarTxt),
+      Icon(snackBarIcon, color: snackBarIconColor)
+    ])));
+  }
+
+  void updateCampaignFunction(
+      {@required campaignName, campaignFrom, campaignTo, ctx}) async {
+    final apiurl = SysConfig.apiUrl;
+
+    final response = await http.post(
+      Uri.parse('$apiurl/campaign/$campaignId'),
+      body: {
+        'campaign_name': campaignName,
+        'from': campaignFrom,
+        'to': campaignTo,
+      },
+    );
+    if (response.statusCode == 200) {
+      final resp = json.decode(response.body);
+      if (resp['status'] == 'Data updated') {
+        snackBarTxt = tr('campaign_updated');
+        snackBarIcon = Icons.check_circle;
+        snackBarIconColor = Colors.green;
+        Navigator.pop(ctx);
+      } else {
+        snackBarTxt = tr('campaign_updation_failed');
+        snackBarIcon = Icons.close;
+        snackBarIconColor = Colors.red;
+      }
+    } else {
+      snackBarTxt = tr('wrong_msg');
+      snackBarIcon = Icons.warning;
+      snackBarIconColor = Colors.red;
     }
     ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
         content: Row(children: [
@@ -77,7 +123,9 @@ class _CreateCampaignState extends State<CreateCampaign> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent[700],
-        title: Text(tr('appbar_campaign_add')),
+        title: Text(editStatus
+            ? tr('appbar_campaign_edit')
+            : tr('appbar_campaign_add')),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -112,6 +160,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                     errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
+                  initialValue: editStatus ? widget.campaignName : '',
                   onChanged: (value) {
                     this.campaignName = value;
                   },
@@ -121,7 +170,6 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     }
                     return null;
                   },
-                  controller: txtCampaignName,
                 ),
               ),
               Padding(
@@ -151,6 +199,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   mode: DateTimeFieldPickerMode.date,
+                  initialValue: editStatus ? widget.from : null,
                   validator: (value) {
                     if (value == null) {
                       return tr('validation_campaign_startdate');
@@ -189,6 +238,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   mode: DateTimeFieldPickerMode.date,
+                  initialValue: editStatus ? widget.to : null,
                   validator: (value) {
                     if (value == null) {
                       return tr('validation_campaign_enddate-1');
@@ -213,29 +263,47 @@ class _CreateCampaignState extends State<CreateCampaign> {
                 decoration: BoxDecoration(
                     color: Colors.tealAccent[400],
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        createCampaignFunction(
-                            campaignName: this.campaignName,
-                            campaignFrom: this.campaignFrom.toString(),
-                            campaignTo: this.campaignTo.toString(),
-                            ctx: this.context);
-                      }
-                    },
-                    child: Row(children: [
-                      Icon(
-                        Icons.add,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        tr('label_create'),
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                    ])),
+                child: editStatus
+                    ? FlatButton(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            updateCampaignFunction(
+                                campaignName: this.campaignName,
+                                campaignFrom: this.campaignFrom.toString(),
+                                campaignTo: this.campaignTo.toString(),
+                                ctx: this.context);
+                          }
+                        },
+                        child: Center(
+                          child: Text(
+                            tr('label_edit'),
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ))
+                    : FlatButton(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            createCampaignFunction(
+                                campaignName: this.campaignName,
+                                campaignFrom: this.campaignFrom.toString(),
+                                campaignTo: this.campaignTo.toString(),
+                                ctx: this.context);
+                          }
+                        },
+                        child: Row(children: [
+                          Icon(
+                            Icons.add,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            tr('label_create'),
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ])),
               ),
             ],
           ),

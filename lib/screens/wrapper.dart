@@ -1,11 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/args/add_price_args.dart';
+import 'package:retail_client/screens/create_campaign.dart';
 import './list_price.dart';
 
 class Wrapper extends StatefulWidget {
-  final String campaignId;
+  final String campaignId, campaignName, from, to;
   final int index;
-  Wrapper({required this.campaignId, required this.index});
+  Wrapper(
+      {required this.campaignId,
+      required this.campaignName,
+      required this.from,
+      required this.to,
+      required this.index});
 
   _WrapperState createState() => _WrapperState();
 }
@@ -13,6 +21,9 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   late int _currentIndex = widget.index;
   late int campaignId = int.parse(widget.campaignId);
+  late String campaignName = widget.campaignName;
+  late DateTime from = DateTime.parse(widget.from).toLocal(),
+      to = DateTime.parse(widget.to).toLocal();
   late List<Widget> _children = [
     Center(
         child: Text(
@@ -21,10 +32,8 @@ class _WrapperState extends State<Wrapper> {
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
     )),
     ListPrize(campaignId: campaignId),
-    Center(
-        child: Text('Edit Campaign',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35))),
+    CreateCampaign(
+        campaignId: campaignId, campaignName: campaignName, from: from, to: to),
   ];
 
   void onTabTapped(int index) {

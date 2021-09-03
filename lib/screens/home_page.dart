@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -150,7 +151,9 @@ class _HomePageState extends State<HomePage> {
                             claimedPrices =
                                 campaign['claimed_prices'].toString(),
                             totalPlayers = campaign['total_players'].toString(),
-                            campaignId = campaign['id'].toString();
+                            campaignId = campaign['id'].toString(),
+                            from = campaign['from'].toString(),
+                            to = campaign['to'].toString();
                         return Container(
                           width: 100,
                           height: 100,
@@ -165,6 +168,9 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.pushNamed(context, '/wrapper',
                                             arguments: CampaignArguments(
                                                 campaignId,
+                                                campaignName,
+                                                from,
+                                                to,
                                                 Constants.prizeIndex))
                                         .then(onReturn);
                                   },
