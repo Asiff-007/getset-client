@@ -91,9 +91,7 @@ class _AddPriceState extends State<AddPrice> {
         snackBarTxt = tr('prize_added');
         snackBarIcon = Icons.check_circle;
         snackBarIconColor = Colors.green;
-        Navigator.pushReplacementNamed(context, '/wrapper',
-            arguments:
-                CampaignArguments(widget.campaignId, Constants.prizeIndex));
+        Navigator.pop(context);
       } else {
         snackBarTxt = tr('prize_faild');
         snackBarIcon = Icons.close;

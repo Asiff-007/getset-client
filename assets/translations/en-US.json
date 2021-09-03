@@ -7,6 +7,7 @@
     "alert_ok":"Ok",
     "alert_cancel":"Cancel",
     "appbar_campaign_add":"New Campaign",
+    "appbar_campaign_edit":"Edit Campaign",
     "appbar_prize_add":"ADD A PRIZE",
     "appbar_login":"Login",
 
@@ -20,6 +21,7 @@
     "label_prize_quantity":"Prize Quantity",
     "label_prize_expiry":"Prize Expiry",
     "label_add_prize":"ADD PRIZE",
+    "label_edit":"EDIT",
 
     "hint_username":"Enter valid username",
     "hint_password":"Enter valid password",
@@ -49,7 +51,9 @@
     "players_claimed":"CLAIMED",
 
     "campaign_created":"New Campaign Created",
-    "campaign_failed":"Campaign Creation Failed",
+    "campaign_updated":"Campaign Updated",
+    "campaign_creation_failed":"Campaign Creation Failed",
+    "campaign_updation_failed":"Campaign Updation Failed",
 
     "wrong_msg":"Something went wrong",
 
