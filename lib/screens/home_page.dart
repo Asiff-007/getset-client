@@ -22,6 +22,14 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  void popUpItem(BuildContext context, item) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (item == 0) {
+      prefs.setBool(Constants.isLogged, false);
+      Navigator.pushReplacementNamed(context, '/login');
+    }
+  }
+
   Future onBackPress({ctx}) async {
     await showDialog<String>(
       context: ctx,
@@ -82,10 +90,29 @@ class _HomePageState extends State<HomePage> {
               height: 55,
               child: Row(
                 children: [
-                  IconButton(
+                  PopupMenuButton<int>(
+                    icon: Icon(
+                      Icons.menu,
                       color: Colors.white,
-                      icon: Icon(Icons.menu),
-                      onPressed: () {}),
+                    ),
+                    itemBuilder: (context) => [
+                      PopupMenuItem<int>(
+                          value: 0,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.logout,
+                                color: Colors.deepPurpleAccent[700],
+                              ),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Text(tr('logout_button'))
+                            ],
+                          )),
+                    ],
+                    onSelected: (item) => popUpItem(context, item),
+                  ),
                 ],
               ),
             )),
@@ -96,7 +123,9 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black,
               size: 30,
             ),
-            onPressed: () {}),
+            onPressed: () async {
+              Navigator.pushNamed(context, '/scan');
+            }),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: FutureBuilder<List<dynamic>>(
             future: getCampaigns(),

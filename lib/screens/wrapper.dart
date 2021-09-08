@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/args/add_price_args.dart';
 import 'package:retail_client/screens/create_campaign.dart';
@@ -35,6 +33,13 @@ class _WrapperState extends State<Wrapper> {
     CreateCampaign(
         campaignId: campaignId, campaignName: campaignName, from: from, to: to),
   ];
+
+  //Function for refresh This page on return to this page
+  Future onReturn(dynamic value) async {
+    setState(() {
+      _currentIndex = 1;
+    });
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -91,8 +96,14 @@ class _WrapperState extends State<Wrapper> {
                 size: 30,
               ),
               onPressed: () {
+                //for refresh prize list on return
+                setState(() {
+                  _currentIndex = 0;
+                });
                 Navigator.pushNamed(context, '/add_price',
-                    arguments: AddPrizeArguments(campaignId.toString()));
+                        arguments:
+                            AddPrizeArguments(campaignId.toString(), from))
+                    .then(onReturn);
               })
           : FloatingActionButton(
               backgroundColor: Colors.tealAccent[700],

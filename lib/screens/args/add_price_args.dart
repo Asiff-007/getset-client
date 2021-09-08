@@ -1,5 +1,7 @@
 class AddPrizeArguments {
   final String campaignId;
 
-  AddPrizeArguments(this.campaignId);
+  final DateTime from;
+
+  AddPrizeArguments(this.campaignId, this.from);
 }

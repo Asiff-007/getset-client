@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   final txtUser = TextEditingController();
   String userName = '';
   String passWord = '';
-  String warn = '';
   String snackBarTxt = '';
   bool shouldpop = false;
   bool connection = true;
@@ -62,17 +61,12 @@ class _LoginPageState extends State<LoginPage> {
         final resp = json.decode(response.body);
         if (resp['status'] == 'success') {
           snackBarTxt = tr('login_success');
-          setState(() {
-            warn = '';
-          });
           prefs.setInt(Constants.shopId, resp['shop_id']);
           prefs.setInt(Constants.adminId, resp['admin_id']);
+          prefs.setBool(Constants.isLogged, true);
           Navigator.pushReplacementNamed(ctx, '/home');
         } else {
           snackBarTxt = resp['error'];
-          setState(() {
-            warn = resp['error'];
-          });
         }
       } else {
         snackBarTxt = tr('wrong_msg');
@@ -104,10 +98,6 @@ class _LoginPageState extends State<LoginPage> {
             key: formKey,
             child: Column(
               children: <Widget>[
-                Text(
-                  '$warn',
-                  style: TextStyle(color: Colors.red),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 60.0),
                   child: Center(
@@ -140,8 +130,6 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: tr('hint_username'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelStyle:
-                          TextStyle(color: Colors.deepPurpleAccent[700]),
-                      errorStyle:
                           TextStyle(color: Colors.deepPurpleAccent[700]),
                     ),
                     onChanged: (value) {
@@ -181,8 +169,6 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: tr('hint_password'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelStyle:
-                          TextStyle(color: Colors.deepPurpleAccent[700]),
-                      errorStyle:
                           TextStyle(color: Colors.deepPurpleAccent[700]),
                     ),
                     onChanged: (value) {
