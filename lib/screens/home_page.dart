@@ -23,8 +23,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void popUpItem(BuildContext context, item) async {
-    final prefs = await SharedPreferences.getInstance();
     if (item == 0) {
+      final prefs = await SharedPreferences.getInstance();
       prefs.setBool(Constants.isLogged, false);
       Navigator.pushReplacementNamed(context, '/login');
     }
@@ -200,7 +200,10 @@ class _HomePageState extends State<HomePage> {
                                                 campaignName,
                                                 from,
                                                 to,
-                                                Constants.prizeIndex))
+                                                campaignStatus,
+                                                totalPlayers,
+                                                claimedPrices,
+                                                Constants.campaignIndex))
                                         .then(onReturn);
                                   },
                                   child: Column(children: [

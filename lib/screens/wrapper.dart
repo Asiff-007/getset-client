@@ -1,16 +1,28 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/args/add_price_args.dart';
+import 'package:retail_client/screens/campaign_details.dart';
 import 'package:retail_client/screens/create_campaign.dart';
 import './list_price.dart';
 
 class Wrapper extends StatefulWidget {
-  final String campaignId, campaignName, from, to;
+  final String campaignId,
+      campaignName,
+      from,
+      to,
+      status,
+      totalPlayers,
+      claimedPrizes;
   final int index;
   Wrapper(
       {required this.campaignId,
       required this.campaignName,
       required this.from,
       required this.to,
+      required this.status,
+      required this.totalPlayers,
+      required this.claimedPrizes,
       required this.index});
 
   _WrapperState createState() => _WrapperState();
@@ -18,17 +30,22 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   late int _currentIndex = widget.index;
-  late int campaignId = int.parse(widget.campaignId);
-  late String campaignName = widget.campaignName;
+  late int campaignId = int.parse(widget.campaignId),
+      totalPlayers = int.parse(widget.totalPlayers),
+      claimedPrizes = int.parse(widget.claimedPrizes);
+  late String campaignName = widget.campaignName,
+      campaignStatus = widget.status;
   late DateTime from = DateTime.parse(widget.from).toLocal(),
       to = DateTime.parse(widget.to).toLocal();
   late List<Widget> _children = [
-    Center(
-        child: Text(
-      'Campaign Details',
-      textAlign: TextAlign.center,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-    )),
+    CampaignDetails(
+      campaignId: campaignId,
+      campaignName: campaignName,
+      campaignStatus: campaignStatus,
+      campaignFrom: from,
+      totalPlayers: totalPlayers,
+      claimedPrizes: claimedPrizes,
+    ),
     ListPrize(campaignId: campaignId),
     CreateCampaign(
         campaignId: campaignId, campaignName: campaignName, from: from, to: to),

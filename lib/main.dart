@@ -70,6 +70,9 @@ class MyApp extends StatelessWidget {
                     campaignName: args.campaignName,
                     from: args.from,
                     to: args.to,
+                    status: args.status,
+                    totalPlayers: args.totalPlayers,
+                    claimedPrizes: args.claimedPrizes,
                     index: args.index);
               },
             );
