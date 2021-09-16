@@ -1,6 +1,7 @@
 {
     "login_success":"Login successful",
     "login_button":"Login",
+    "logout_button":"Logout",
 
     "alert":"Alert",
     "alert_exit":"Do you want to exit",
@@ -21,13 +22,15 @@
     "label_prize_quantity":"Prize Quantity",
     "label_prize_expiry":"Prize Expiry",
     "label_add_prize":"ADD PRIZE",
-    "label_edit":"EDIT",
+    "label_edit":"SAVE",
+    "label_scan_coupen": "SCAN COUPON",
+    "label_scan_desc": "Scan coupon to verify prize",
 
     "hint_username":"Enter valid username",
     "hint_password":"Enter valid password",
     "hint_campaign_name":"Enter Campaign Name",
-    "hint_campaign_startdate":"Enter campaign Starting Date",
-    "hint_campaign_enddate":"Enter campaign Ending date",
+    "hint_campaign_startdate":"Enter Campaign Starting Date",
+    "hint_campaign_enddate":"Enter Campaign Ending Date",
     "hint_prize_name":"Enter Prize Name",
     "hint_prize_quantity":"Enter Prize Quantity",
     "hint_prize_expiry":"Select Prize Expiry Date",
@@ -40,7 +43,9 @@
     "validation_campaign_enddate-2":"Enter A Valid Ending Date",
     "validation_prize_name":"Enter A Name for Your Prize",
     "validation_prize_quantity":"Enter The Quantity Of Your Prize",
-    "validation_prize_expiry":"Select The Expiry Date Of Your Prize",
+    "validation_prize_expiry-1":"Select The Expiry Date Of Your Prize",
+    "validation_prize_expiry-2":"Date Before Campaign Start Can't Select For Prize Expiry",
+    "validation_prize_image":"Select Image for Your Prize",
 
     "no_internet":"No internet connection",
     "new_campaign":"NEW CAMPAIGN",
@@ -63,6 +68,7 @@
     "prize_added":"Prize Added successfully",
     "prize_faild":"Adding Prize Failed",
     "prize_quantity":"Quantity",
-    "prize_list":"Prize List"
+    "prize_list":"Prize List",
+    "prize_empty":"No Prizes To Show\n\nPlease Add Prize"
 
 }

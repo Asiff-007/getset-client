@@ -34,6 +34,13 @@ class _CreateCampaignState extends State<CreateCampaign> {
   late Color snackBarIconColor;
   late int campaignId = widget.campaignId;
   late bool editStatus = campaignId > 0 ? true : false;
+  bool isEnabled = true;
+
+  buttonStatus(status) {
+    setState(() {
+      isEnabled = status;
+    });
+  }
 
   void createCampaignFunction(
       {@required campaignName, campaignFrom, campaignTo, ctx}) async {
@@ -69,11 +76,13 @@ class _CreateCampaignState extends State<CreateCampaign> {
         snackBarTxt = tr('campaign_creation_failed');
         snackBarIcon = Icons.close;
         snackBarIconColor = Colors.red;
+        buttonStatus(true);
       }
     } else {
       snackBarTxt = tr('wrong_msg');
       snackBarIcon = Icons.warning;
       snackBarIconColor = Colors.red;
+      buttonStatus(true);
     }
     ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
         content: Row(children: [
@@ -105,11 +114,13 @@ class _CreateCampaignState extends State<CreateCampaign> {
         snackBarTxt = tr('campaign_updation_failed');
         snackBarIcon = Icons.close;
         snackBarIconColor = Colors.red;
+        buttonStatus(true);
       }
     } else {
       snackBarTxt = tr('wrong_msg');
       snackBarIcon = Icons.warning;
       snackBarIconColor = Colors.red;
+      buttonStatus(true);
     }
     ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
         content: Row(children: [
@@ -138,6 +149,7 @@ class _CreateCampaignState extends State<CreateCampaign> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(),
@@ -158,7 +170,6 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     hintText: tr('hint_campaign_name'),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
-                    errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   initialValue: editStatus ? widget.campaignName : '',
                   onChanged: (value) {
@@ -196,7 +207,6 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     labelText: tr('label_campaign_startdate'),
                     hintText: tr('hint_campaign_startdate'),
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
-                    errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   mode: DateTimeFieldPickerMode.date,
                   initialValue: editStatus ? widget.from : null,
@@ -235,7 +245,6 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     labelText: tr('label_campaign_enddate'),
                     hintText: tr('hint_campaign_enddate'),
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
-                    errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   mode: DateTimeFieldPickerMode.date,
                   initialValue: editStatus ? widget.to : null,
@@ -265,15 +274,19 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     borderRadius: BorderRadius.circular(20)),
                 child: editStatus
                     ? FlatButton(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            updateCampaignFunction(
-                                campaignName: this.campaignName,
-                                campaignFrom: this.campaignFrom.toString(),
-                                campaignTo: this.campaignTo.toString(),
-                                ctx: this.context);
-                          }
-                        },
+                        onPressed: isEnabled
+                            ? () async {
+                                if (formKey.currentState!.validate()) {
+                                  buttonStatus(false);
+                                  updateCampaignFunction(
+                                      campaignName: this.campaignName,
+                                      campaignFrom:
+                                          this.campaignFrom.toString(),
+                                      campaignTo: this.campaignTo.toString(),
+                                      ctx: this.context);
+                                }
+                              }
+                            : null,
                         child: Center(
                           child: Text(
                             tr('label_edit'),
@@ -282,15 +295,19 @@ class _CreateCampaignState extends State<CreateCampaign> {
                           ),
                         ))
                     : FlatButton(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            createCampaignFunction(
-                                campaignName: this.campaignName,
-                                campaignFrom: this.campaignFrom.toString(),
-                                campaignTo: this.campaignTo.toString(),
-                                ctx: this.context);
-                          }
-                        },
+                        onPressed: isEnabled
+                            ? () async {
+                                if (formKey.currentState!.validate()) {
+                                  buttonStatus(false);
+                                  createCampaignFunction(
+                                      campaignName: this.campaignName,
+                                      campaignFrom:
+                                          this.campaignFrom.toString(),
+                                      campaignTo: this.campaignTo.toString(),
+                                      ctx: this.context);
+                                }
+                              }
+                            : null,
                         child: Row(children: [
                           Icon(
                             Icons.add,

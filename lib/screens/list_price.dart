@@ -20,6 +20,10 @@ class ListPrize extends StatefulWidget {
 class _ListPrizeState extends State<ListPrize> {
   late bool switchStatus;
 
+  Future onReturn(dynamic value) async {
+    setState(() {});
+  }
+
   Future<List<dynamic>> getPrizes() async {
     final apiurl = SysConfig.apiUrl;
     late int campaignId = widget.campaignId;
@@ -53,13 +57,7 @@ class _ListPrizeState extends State<ListPrize> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent[700],
-          automaticallyImplyLeading: false,
-          title: Text(tr('prize_list')),
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: 'Menu Icon',
-            onPressed: () {},
-          ), //IconButt
+          title: Text(tr('prize_list')), //IconButt
         ),
         body: FutureBuilder<List<dynamic>>(
             future: getPrizes(),
@@ -72,35 +70,9 @@ class _ListPrizeState extends State<ListPrize> {
                 var prizes = prizeSnap.data!;
                 if (prizes.length == 0) {
                   return Center(
-                    child: Container(
-                        width: 200,
-                        height: 200,
-                        padding: new EdgeInsets.all(5.0),
-                        child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            elevation: 7,
-                            child: InkWell(
-                              onTap: () async {
-                                Navigator.pushNamed(context, '/add_price',
-                                    arguments: AddPrizeArguments(
-                                        widget.campaignId.toString()));
-                              },
-                              child: Center(
-                                child: ListTile(
-                                  title: Icon(
-                                    Icons.add,
-                                    size: 100,
-                                  ),
-                                  subtitle: Text(
-                                    tr('label_add_prize'),
-                                    style: TextStyle(fontSize: 14.0),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ))),
+                    child: Text(tr('prize_empty'),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30)),
                   );
                 } else {
                   return ListView.builder(

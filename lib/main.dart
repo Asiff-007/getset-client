@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:retail_client/screens/add_price.dart';
 import 'package:retail_client/screens/args/add_price_args.dart';
 import 'package:retail_client/screens/args/campaign_args.dart';
+import 'package:retail_client/screens/args/verify-prize_args.dart';
+import 'package:retail_client/screens/scan.dart';
 import 'package:retail_client/screens/wrapper.dart';
 import './screens/login_page.dart';
 import './screens/home_page.dart';
@@ -10,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../utils/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
+import './screens/verify_prize.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,15 +50,14 @@ class MyApp extends StatelessWidget {
                 from: DateTime.now(),
                 to: DateTime.now(),
               ),
+          '/scan': (context) => Scan(),
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/add_price') {
             final args = settings.arguments as AddPrizeArguments;
             return MaterialPageRoute(
               builder: (context) {
-                return AddPrice(
-                  campaignId: args.campaignId,
-                );
+                return AddPrice(campaignId: args.campaignId, from: args.from);
               },
             );
           }
@@ -69,6 +71,16 @@ class MyApp extends StatelessWidget {
                     from: args.from,
                     to: args.to,
                     index: args.index);
+              },
+            );
+          }
+          if (settings.name == '/verify_prize') {
+            final args = settings.arguments as VerifyArgs;
+            return MaterialPageRoute(
+              builder: (context) {
+                return VerifyPrize(
+                  url: args.url,
+                );
               },
             );
           }

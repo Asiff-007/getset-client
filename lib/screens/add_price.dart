@@ -14,8 +14,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class AddPrice extends StatefulWidget {
   final String campaignId;
+  final DateTime from;
 
-  AddPrice({required this.campaignId});
+  AddPrice({required this.campaignId, required this.from});
   @override
   _AddPriceState createState() => _AddPriceState();
 }
@@ -30,10 +31,17 @@ class _AddPriceState extends State<AddPrice> {
       imagepath = '',
       warning = '',
       imageUrl = '';
+  bool isEnabled = true;
   late File _img;
-  late DateTime prizeExpiry;
+  late DateTime prizeExpiry, campaignFrom = widget.from;
   late IconData snackBarIcon;
   late Color snackBarIconColor;
+
+  buttonStatus(status) {
+    setState(() {
+      isEnabled = status;
+    });
+  }
 
   Future chooseImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -96,11 +104,13 @@ class _AddPriceState extends State<AddPrice> {
         snackBarTxt = tr('prize_faild');
         snackBarIcon = Icons.close;
         snackBarIconColor = Colors.red;
+        buttonStatus(true);
       }
     } else {
       snackBarTxt = tr('wrong_msg');
       snackBarIcon = Icons.warning;
       snackBarIconColor = Colors.red;
+      buttonStatus(true);
     }
     ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
         content: Row(children: [
@@ -127,6 +137,7 @@ class _AddPriceState extends State<AddPrice> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(),
@@ -147,7 +158,6 @@ class _AddPriceState extends State<AddPrice> {
                     hintText: tr('hint_prize_name'),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
-                    errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   onChanged: (value) {
                     this.prizeName = value;
@@ -185,7 +195,6 @@ class _AddPriceState extends State<AddPrice> {
                     hintText: tr('hint_prize_quantity'),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
-                    errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -227,12 +236,13 @@ class _AddPriceState extends State<AddPrice> {
                     labelText: tr('label_prize_expiry'),
                     hintText: tr('hint_prize_expiry'),
                     labelStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
-                    errorStyle: TextStyle(color: Colors.deepPurpleAccent[700]),
                   ),
                   mode: DateTimeFieldPickerMode.date,
                   validator: (value) {
                     if (value == null) {
-                      return tr('validation_prize_expiry');
+                      return tr('validation_prize_expiry-1');
+                    } else if (value.isBefore(campaignFrom)) {
+                      return tr('validation_prize_expiry-2');
                     }
                     return null;
                   },
@@ -297,6 +307,10 @@ class _AddPriceState extends State<AddPrice> {
                           ),
                         ))),
               ),
+              Text(
+                warning,
+                style: TextStyle(color: Colors.red[400]),
+              ),
               SizedBox(
                 height: 60,
               ),
@@ -308,16 +322,26 @@ class _AddPriceState extends State<AddPrice> {
                     color: Colors.tealAccent[400],
                     borderRadius: BorderRadius.circular(20)),
                 child: FlatButton(
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        await uploadImage();
-                        addPrizeFunction(
-                            prizeName: this.prizeName,
-                            prizeQuantity: this.prizeQuantity.toString(),
-                            prizeExpiry: this.prizeExpiry.toString(),
-                            ctx: this.context);
-                      }
-                    },
+                    onPressed: isEnabled
+                        ? () async {
+                            if (formKey.currentState!.validate() &&
+                                imagepath != '') {
+                              buttonStatus(false);
+                              await uploadImage();
+                              addPrizeFunction(
+                                  prizeName: this.prizeName,
+                                  prizeQuantity: this.prizeQuantity.toString(),
+                                  prizeExpiry: this.prizeExpiry.toString(),
+                                  ctx: this.context);
+                            } else {
+                              if (imagepath == '') {
+                                setState(() {
+                                  warning = tr('validation_prize_image');
+                                });
+                              }
+                            }
+                          }
+                        : null,
                     child: Row(children: [
                       Icon(
                         Icons.add,
