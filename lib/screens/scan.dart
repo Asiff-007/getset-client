@@ -15,6 +15,7 @@ class _ScanState extends State<Scan> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  late final Uri url;
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -95,16 +96,15 @@ class _ScanState extends State<Scan> {
       setState(() {
         result = scanData;
       });
+      url = Uri.parse(result!.code);
+      String? campaignId = url.queryParameters["campaignId"],
+          ticketId = url.queryParameters["ticketId"];
       if (Platform.isAndroid) {
         controller.pauseCamera();
       }
-      Navigator.pushNamed(context, 'game', arguments: VerifyArgs(result!.code))
-          .then((value) => onReturn());
+      Navigator.pushReplacementNamed(context, '/verify_prize',
+          arguments: VerifyArgs(campaignId!, ticketId!));
     });
-  }
-
-  void onReturn() {
-    this.controller!.resumeCamera();
   }
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {

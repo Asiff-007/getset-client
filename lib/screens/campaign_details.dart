@@ -29,11 +29,11 @@ class _CampaignDetailsState extends State<CampaignDetails> {
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   late int campaignId = widget.campaignId;
   late String campaignName = widget.campaignName,
-      capaignStatus = widget.campaignStatus,
+      campaignStatus = widget.campaignStatus,
       campaignFrom = formatter.format(widget.campaignFrom),
       totalPlayers = widget.totalPlayers.toString(),
       claimedPrizes = widget.claimedPrizes.toString();
-  late bool switchStatus = capaignStatus == Constants.Active ? true : false;
+  late bool switchStatus = campaignStatus == Constants.Active;
 
   Future<List<dynamic>> getPrizes() async {
     final apiurl = SysConfig.apiUrl;

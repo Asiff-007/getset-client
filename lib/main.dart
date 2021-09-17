@@ -82,8 +82,7 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (context) {
                 return VerifyPrize(
-                  url: args.url,
-                );
+                    campaignId: args.campaignId, ticketId: args.ticketId);
               },
             );
           }

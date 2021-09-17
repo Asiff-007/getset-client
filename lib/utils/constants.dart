@@ -13,6 +13,8 @@ class Constants {
 
   static final String InActive = "InActive";
 
+  static final String Claimed = "Claimed";
+
   static final int prizeIndex = 1;
 
   static final int campaignIndex = 0;

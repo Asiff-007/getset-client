@@ -1,5 +1,5 @@
 class VerifyArgs {
-  final String url;
+  final String campaignId, ticketId;
 
-  VerifyArgs(this.url);
+  VerifyArgs(this.campaignId, this.ticketId);
 }
