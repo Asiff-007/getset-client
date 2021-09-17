@@ -322,26 +322,25 @@ class _AddPriceState extends State<AddPrice> {
                     color: Colors.tealAccent[400],
                     borderRadius: BorderRadius.circular(20)),
                 child: FlatButton(
-                    onPressed: isEnabled
-                        ? () async {
-                            if (formKey.currentState!.validate() &&
-                                imagepath != '') {
-                              buttonStatus(false);
-                              await uploadImage();
-                              addPrizeFunction(
-                                  prizeName: this.prizeName,
-                                  prizeQuantity: this.prizeQuantity.toString(),
-                                  prizeExpiry: this.prizeExpiry.toString(),
-                                  ctx: this.context);
-                            } else {
-                              if (imagepath == '') {
-                                setState(() {
-                                  warning = tr('validation_prize_image');
-                                });
-                              }
-                            }
-                          }
-                        : null,
+                    onPressed: () async {
+                      if (formKey.currentState!.validate() &&
+                          imagepath != '' &&
+                          isEnabled) {
+                        buttonStatus(false);
+                        await uploadImage();
+                        addPrizeFunction(
+                            prizeName: this.prizeName,
+                            prizeQuantity: this.prizeQuantity.toString(),
+                            prizeExpiry: this.prizeExpiry.toString(),
+                            ctx: this.context);
+                      } else {
+                        if (imagepath == '') {
+                          setState(() {
+                            warning = tr('validation_prize_image');
+                          });
+                        }
+                      }
+                    },
                     child: Row(children: [
                       Icon(
                         Icons.add,

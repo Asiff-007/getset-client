@@ -26,6 +26,7 @@ class CreateCampaign extends StatefulWidget {
 
 class _CreateCampaignState extends State<CreateCampaign> {
   final formKey = GlobalKey<FormState>();
+  final int totalPlayers = 0, claimedPrizes = 0;
   late String campaignName = widget.campaignName, snackBarTxt = '';
   late String status;
   late DateTime campaignFrom = widget.from;
@@ -71,6 +72,9 @@ class _CreateCampaignState extends State<CreateCampaign> {
                 campaignName,
                 campaignFrom.toString(),
                 campaignTo.toString(),
+                resp['campaign_status'],
+                totalPlayers.toString(),
+                claimedPrizes.toString(),
                 Constants.prizeIndex));
       } else {
         snackBarTxt = tr('campaign_creation_failed');
@@ -274,19 +278,16 @@ class _CreateCampaignState extends State<CreateCampaign> {
                     borderRadius: BorderRadius.circular(20)),
                 child: editStatus
                     ? FlatButton(
-                        onPressed: isEnabled
-                            ? () async {
-                                if (formKey.currentState!.validate()) {
-                                  buttonStatus(false);
-                                  updateCampaignFunction(
-                                      campaignName: this.campaignName,
-                                      campaignFrom:
-                                          this.campaignFrom.toString(),
-                                      campaignTo: this.campaignTo.toString(),
-                                      ctx: this.context);
-                                }
-                              }
-                            : null,
+                        onPressed: () async {
+                          if (formKey.currentState!.validate() && isEnabled) {
+                            buttonStatus(false);
+                            updateCampaignFunction(
+                                campaignName: this.campaignName,
+                                campaignFrom: this.campaignFrom.toString(),
+                                campaignTo: this.campaignTo.toString(),
+                                ctx: this.context);
+                          }
+                        },
                         child: Center(
                           child: Text(
                             tr('label_edit'),
@@ -295,19 +296,16 @@ class _CreateCampaignState extends State<CreateCampaign> {
                           ),
                         ))
                     : FlatButton(
-                        onPressed: isEnabled
-                            ? () async {
-                                if (formKey.currentState!.validate()) {
-                                  buttonStatus(false);
-                                  createCampaignFunction(
-                                      campaignName: this.campaignName,
-                                      campaignFrom:
-                                          this.campaignFrom.toString(),
-                                      campaignTo: this.campaignTo.toString(),
-                                      ctx: this.context);
-                                }
-                              }
-                            : null,
+                        onPressed: () async {
+                          if (formKey.currentState!.validate() && isEnabled) {
+                            buttonStatus(false);
+                            createCampaignFunction(
+                                campaignName: this.campaignName,
+                                campaignFrom: this.campaignFrom.toString(),
+                                campaignTo: this.campaignTo.toString(),
+                                ctx: this.context);
+                          }
+                        },
                         child: Row(children: [
                           Icon(
                             Icons.add,

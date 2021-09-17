@@ -20,10 +20,6 @@ class ListPrize extends StatefulWidget {
 class _ListPrizeState extends State<ListPrize> {
   late bool switchStatus;
 
-  Future onReturn(dynamic value) async {
-    setState(() {});
-  }
-
   Future<List<dynamic>> getPrizes() async {
     final apiurl = SysConfig.apiUrl;
     late int campaignId = widget.campaignId;
@@ -70,7 +66,7 @@ class _ListPrizeState extends State<ListPrize> {
                 var prizes = prizeSnap.data!;
                 if (prizes.length == 0) {
                   return Center(
-                    child: Text(tr('prize_empty'),
+                    child: Text(tr('prize_empty-1'),
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 30)),
                   );

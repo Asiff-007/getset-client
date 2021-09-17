@@ -15,5 +15,5 @@ class Constants {
 
   static final int prizeIndex = 1;
 
-  static final int campaignIndex = 1;
+  static final int campaignIndex = 0;
 }

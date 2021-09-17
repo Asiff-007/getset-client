@@ -9,6 +9,7 @@
     "alert_cancel":"Cancel",
     "appbar_campaign_add":"New Campaign",
     "appbar_campaign_edit":"Edit Campaign",
+    "appbar_campaign_details":"Campaign Details",
     "appbar_prize_add":"ADD A PRIZE",
     "appbar_login":"Login",
 
@@ -69,6 +70,9 @@
     "prize_faild":"Adding Prize Failed",
     "prize_quantity":"Quantity",
     "prize_list":"Prize List",
-    "prize_empty":"No Prizes To Show\n\nPlease Add Prize"
+    "prize_empty-1":"No Prizes To Show\n\nPlease Add Prize",
+    "prize_empty-2":"No Prizes",
+    "prize_claimed":"PRIZES CLAIMED ",
+    "players":"PLAYERS"
 
 }
