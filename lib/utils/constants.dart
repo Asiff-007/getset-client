@@ -11,7 +11,9 @@ class Constants {
 
   static final String Pending = "Pending";
 
-  static final String InActive = "InActive";
+  static final String InActive = "Inactive";
+
+  static final String Claimed = "Claimed";
 
   static final int prizeIndex = 1;
 

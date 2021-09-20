@@ -73,6 +73,12 @@
     "prize_empty-1":"No Prizes To Show\n\nPlease Add Prize",
     "prize_empty-2":"No Prizes",
     "prize_claimed":"PRIZES CLAIMED ",
-    "players":"PLAYERS"
+    "prize_verified":"Prize verified successfully",
+    "prize_verification_faild":"Prize verification faild",
+    "prize_confirm":"CONFIRM CLAIM",
+    "players":"PLAYERS",
+
+    "title_verification":"PRIZE VERIFIED",
+    "ticket_id":"TICKET ID"
 
 }
