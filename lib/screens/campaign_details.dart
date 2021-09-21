@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:retail_client/screens/args/add_price_args.dart';
 import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
@@ -175,8 +173,9 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                                       });
                                 }
                               } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.deepPurpleAccent[700]),
                                 );
                               }
                             })
@@ -247,8 +246,9 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                               );
                             });
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Center(
+                          child: CircularProgressIndicator(
+                              color: Colors.deepPurpleAccent[700]),
                         );
                       }
                     }))

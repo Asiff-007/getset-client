@@ -3,14 +3,13 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:retail_client/screens/args/campaign_args.dart';
 import '../utils/sys-config.dart';
 import 'package:http/http.dart' as http;
-import '../utils/constants.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:date_field/date_field.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 class AddPrice extends StatefulWidget {
   final String campaignId;
@@ -112,6 +111,7 @@ class _AddPriceState extends State<AddPrice> {
       snackBarIconColor = Colors.red;
       buttonStatus(true);
     }
+    Loader.hide();
     ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
         content: Row(children: [
       Text(snackBarTxt),
@@ -327,6 +327,11 @@ class _AddPriceState extends State<AddPrice> {
                           imagepath != '' &&
                           isEnabled) {
                         buttonStatus(false);
+                        Loader.show(context,
+                            isAppbarOverlay: false,
+                            progressIndicator: CircularProgressIndicator(
+                              color: Colors.deepPurpleAccent[700],
+                            ));
                         await uploadImage();
                         addPrizeFunction(
                             prizeName: this.prizeName,

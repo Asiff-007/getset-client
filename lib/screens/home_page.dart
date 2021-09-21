@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -245,7 +244,8 @@ class _HomePageState extends State<HomePage> {
                                                 fontSize: 18.0,
                                                 fontWeight: FontWeight.bold),
                                             textAlign: TextAlign.center),
-                                        subtitle: Text(campaignStatus,
+                                        subtitle: Text(
+                                            campaignStatus.toUpperCase(),
                                             style: TextStyle(fontSize: 14.0),
                                             textAlign: TextAlign.center),
                                       ),
@@ -255,8 +255,9 @@ class _HomePageState extends State<HomePage> {
                       }
                     });
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: CircularProgressIndicator(
+                      color: Colors.deepPurpleAccent[700]),
                 );
               }
             }),
