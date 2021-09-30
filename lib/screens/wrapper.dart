@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:retail_client/screens/args/add_price_args.dart';
 import 'package:retail_client/screens/campaign_details.dart';
@@ -129,7 +127,9 @@ class _WrapperState extends State<Wrapper> {
                 color: Colors.black,
                 size: 30,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.pushNamed(context, '/scan');
+              }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
