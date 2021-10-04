@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:retail_client/utils/constants.dart';
@@ -15,6 +16,7 @@ class VerifyPrize extends StatefulWidget {
 
 class _VerifyPrize extends State<VerifyPrize> {
   late int ticketId = int.parse(widget.ticketId);
+  late int campaignId = int.parse(widget.campaignId);
   String snackBarTxt = '';
   late IconData snackBarIcon;
   late Color snackBarIconColor;
@@ -42,7 +44,7 @@ class _VerifyPrize extends State<VerifyPrize> {
     final apiurl = SysConfig.apiUrl;
 
     final response = await http.post(
-      Uri.parse('$apiurl/userPrice/$ticketId'),
+      Uri.parse('$apiurl/userPrice/$ticketId/?campaign_id=$campaignId'),
       body: {
         'claim_status': Constants.Claimed,
         'claimed_on': DateTime.now().toString(),

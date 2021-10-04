@@ -96,8 +96,8 @@ class _ScanState extends State<Scan> {
         result = scanData;
       });
       url = Uri.parse(result!.code);
-      String? campaignId = url.queryParameters["campaignId"],
-          ticketId = url.queryParameters["ticketId"];
+      String? campaignId = url.queryParameters["campaign_id"],
+          ticketId = url.queryParameters["ticket_id"];
       if (Platform.isAndroid) {
         controller.pauseCamera();
       }
