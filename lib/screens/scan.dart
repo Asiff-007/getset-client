@@ -101,8 +101,15 @@ class _ScanState extends State<Scan> {
       if (Platform.isAndroid) {
         controller.pauseCamera();
       }
-      Navigator.pushReplacementNamed(context, '/verify_prize',
-          arguments: VerifyArgs(campaignId!, ticketId!));
+      if (ticketId != null) {
+        Navigator.pushReplacementNamed(context, '/verify_prize',
+            arguments: VerifyArgs(campaignId!, ticketId!));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid QR code')),
+        );
+        Navigator.pop(context);
+      }
     });
   }
 

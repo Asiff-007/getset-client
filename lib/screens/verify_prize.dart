@@ -15,7 +15,7 @@ class VerifyPrize extends StatefulWidget {
 }
 
 class _VerifyPrize extends State<VerifyPrize> {
-  late int ticketId = int.parse(widget.ticketId);
+  late String ticketId = widget.ticketId;
   late int campaignId = int.parse(widget.campaignId);
   String snackBarTxt = '';
   late IconData snackBarIcon;
