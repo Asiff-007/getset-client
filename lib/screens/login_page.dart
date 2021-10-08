@@ -99,13 +99,18 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 60.0),
+                  padding: const EdgeInsets.only(top: 40.0),
                   child: Center(
                     child: Container(
-                      width: 200,
-                      height: 200,
+                      width: 270,
+                      height: 270,
+                      child:
+                          Image.asset('assets/images/getset_logo_business.png'),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
