@@ -96,13 +96,20 @@ class _ScanState extends State<Scan> {
         result = scanData;
       });
       url = Uri.parse(result!.code);
-      String? campaignId = url.queryParameters["campaignId"],
-          ticketId = url.queryParameters["ticketId"];
+      String? campaignId = url.queryParameters["campaign_id"],
+          ticketId = url.queryParameters["ticket_id"];
       if (Platform.isAndroid) {
         controller.pauseCamera();
       }
-      Navigator.pushReplacementNamed(context, '/verify_prize',
-          arguments: VerifyArgs(campaignId!, ticketId!));
+      if (ticketId != null) {
+        Navigator.pushReplacementNamed(context, '/verify_prize',
+            arguments: VerifyArgs(campaignId!, ticketId!));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid QR code')),
+        );
+        Navigator.pop(context);
+      }
     });
   }
 
