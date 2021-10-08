@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../utils/check-connection.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -203,55 +204,62 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                   left: 35.0,
                   right: 18,
                 ),
-                child: FutureBuilder<List<dynamic>>(
-                    future: getWinners(),
-                    builder: (context, winnerSnap) {
-                      if (winnerSnap.hasError) {
-                        return Center(
-                          child: Text(tr('error_msg')),
-                        );
-                      } else if (winnerSnap.hasData) {
-                        var winners = winnerSnap.data!;
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: winners.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              var winner = winners[index];
-                              String winnerId = winner['ticketId'].toString(),
-                                  prizeName = winner['prizeName'];
-                              return Column(
-                                children: <Widget>[
-                                  ListTile(
-                                    title: Text(
-                                      winnerId,
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black54),
-                                    ),
-                                    trailing: Text(
-                                      prizeName,
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black54),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 0, horizontal: 1),
-                                    dense: true,
-                                  ),
-                                  Divider(
-                                    height: 0,
-                                    thickness: 1,
-                                    color: Colors.black,
-                                  ),
-                                ],
-                              );
-                            });
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                              color: Colors.deepPurpleAccent[700]),
-                        );
-                      }
-                    }))
+                child: Container(
+                    child: FutureBuilder<List<dynamic>>(
+                        future: getWinners(),
+                        builder: (context, winnerSnap) {
+                          if (winnerSnap.hasError) {
+                            return Center(
+                              child: Text(tr('error_msg')),
+                            );
+                          } else if (winnerSnap.hasData) {
+                            var winners = winnerSnap.data!;
+                            return ListView.builder(
+                                physics: ClampingScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: winners.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var winner = winners[index];
+                                  String winnerId =
+                                          winner['ticketId'].toString(),
+                                      prizeName = winner['prizeName'];
+                                  return Column(
+                                    children: <Widget>[
+                                      ListTile(
+                                        title: Text(
+                                          winnerId,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black54),
+                                        ),
+                                        trailing: Text(
+                                          prizeName == ''
+                                              ? 'Noprize'
+                                              : prizeName,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black54),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 1),
+                                        dense: true,
+                                      ),
+                                      Divider(
+                                        height: 0,
+                                        thickness: 1,
+                                        color: Colors.black,
+                                      ),
+                                    ],
+                                  );
+                                });
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                  color: Colors.deepPurpleAccent[700]),
+                            );
+                          }
+                        })))
           ],
         ));
   }
