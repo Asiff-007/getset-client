@@ -101,87 +101,100 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     elevation: 3,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 5),
-                        Padding(
-                          padding: new EdgeInsets.only(left: 40),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                tr('prize_claimed'),
-                                style: (TextStyle(
-                                    fontSize: 20, color: Colors.black54)),
-                                textAlign: TextAlign.start,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        FutureBuilder<List<dynamic>>(
-                            future: getPrizes(),
-                            builder: (context, prizeSnap) {
-                              if (prizeSnap.hasError) {
-                                return Center(
-                                  child: Text(tr('error_msg')),
-                                );
-                              } else if (prizeSnap.hasData) {
-                                var prizes = prizeSnap.data!;
-                                if (prizes.length == 0) {
-                                  return Center(
-                                      child: Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 15, bottom: 15),
-                                    child: Text(tr('prize_empty-2'),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 18)),
-                                  ));
-                                } else {
-                                  return GridView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      itemCount: prizes.length,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              crossAxisSpacing: 0,
-                                              mainAxisSpacing: 0,
-                                              childAspectRatio: (100 / 45)),
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        var prize = prizes[index];
-                                        String prizeName = prize['name'],
-                                            prizeGiven =
-                                                prize['given'].toString(),
-                                            prizeCount =
-                                                prize['count'].toString();
-                                        return Container(
-                                          child: ListTile(
-                                            title: Text(
-                                                prizeGiven + '/' + prizeCount,
-                                                style: TextStyle(
-                                                    fontSize: 25.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black54),
-                                                textAlign: TextAlign.center),
-                                            subtitle: Text(prizeName,
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.black54),
-                                                textAlign: TextAlign.center),
-                                          ),
-                                        );
-                                      });
-                                }
-                              } else {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.deepPurpleAccent[700]),
-                                );
-                              }
-                            })
-                      ],
-                    ))),
+                    child: SizedBox(
+                        height: 140,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 5),
+                            Padding(
+                              padding: new EdgeInsets.only(left: 40),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    tr('prize_claimed'),
+                                    style: (TextStyle(
+                                        fontSize: 20, color: Colors.black54)),
+                                    textAlign: TextAlign.start,
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            FutureBuilder<List<dynamic>>(
+                                future: getPrizes(),
+                                builder: (context, prizeSnap) {
+                                  if (prizeSnap.hasError) {
+                                    return Center(
+                                      child: Text(tr('error_msg')),
+                                    );
+                                  } else if (prizeSnap.hasData) {
+                                    var prizes = prizeSnap.data!;
+                                    if (prizes.length == 0) {
+                                      return Center(
+                                          child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 15, bottom: 15),
+                                        child: Text(tr('prize_empty-2'),
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 18)),
+                                      ));
+                                    } else {
+                                      return Container(
+                                          height: 80,
+                                          width: double.maxFinite,
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              shrinkWrap: true,
+                                              itemCount: prizes.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                var prize = prizes[index];
+                                                String prizeName =
+                                                        prize['name'],
+                                                    prizeGiven = prize['given']
+                                                        .toString(),
+                                                    prizeCount = prize['count']
+                                                        .toString();
+                                                return Container(
+                                                  width: 170,
+                                                  height: 50,
+                                                  child: ListTile(
+                                                    title: Text(
+                                                        prizeGiven +
+                                                            '/' +
+                                                            prizeCount,
+                                                        style: TextStyle(
+                                                            fontSize: 25.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.black54),
+                                                        textAlign:
+                                                            TextAlign.center),
+                                                    subtitle: Text(prizeName,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        softWrap: false,
+                                                        style: TextStyle(
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black54),
+                                                        textAlign:
+                                                            TextAlign.center),
+                                                  ),
+                                                );
+                                              }));
+                                    }
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                          color: Colors.deepPurpleAccent[700]),
+                                    );
+                                  }
+                                })
+                          ],
+                        )))),
             Padding(
                 padding: new EdgeInsets.only(
                     left: 35.0, right: 18, top: 15, bottom: 4),
@@ -233,14 +246,17 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                                               fontSize: 16,
                                               color: Colors.black54),
                                         ),
-                                        trailing: Text(
-                                          prizeName == ''
-                                              ? 'Noprize'
-                                              : prizeName,
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black54),
-                                        ),
+                                        trailing: Container(
+                                            width: 130,
+                                            child: Text(
+                                              prizeName,
+                                              overflow: TextOverflow.ellipsis,
+                                              softWrap: false,
+                                              textAlign: TextAlign.end,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black54),
+                                            )),
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 0, horizontal: 1),
                                         dense: true,
