@@ -94,12 +94,13 @@ class _VerifyPrize extends State<VerifyPrize> {
                   prizeName = prize['name'],
                   ticketId = prize['ticket_id'].toString();
               DateTime prizeWonON = DateTime.parse(prize['price_won_on']);
-              return Container(
-                  child: Center(
-                      child: Column(
+              return SingleChildScrollView(
+                  child: Container(
+                      child: Center(
+                          child: Column(
                 children: [
                   SizedBox(
-                    height: 60,
+                    height: 30,
                   ),
                   Text(
                     tr('title_verification'),
@@ -124,8 +125,11 @@ class _VerifyPrize extends State<VerifyPrize> {
                   SizedBox(
                     height: 17,
                   ),
-                  Text(prizeName,
-                      style: TextStyle(fontSize: 28, color: Colors.black54)),
+                  Text(
+                    prizeName,
+                    style: TextStyle(fontSize: 28, color: Colors.black54),
+                    textAlign: TextAlign.center,
+                  ),
                   SizedBox(
                     height: 30,
                   ),
@@ -169,7 +173,7 @@ class _VerifyPrize extends State<VerifyPrize> {
                         ])),
                   ),
                 ],
-              )));
+              ))));
             } else {
               return Center(
                 child: CircularProgressIndicator(
