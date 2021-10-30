@@ -31,6 +31,9 @@ class _ScanState extends State<Scan> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.purple[900],
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurpleAccent[700],
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -101,9 +104,10 @@ class _ScanState extends State<Scan> {
       if (Platform.isAndroid) {
         controller.pauseCamera();
       }
+      debugPrint("ticket_id: $ticketId");
       if (ticketId != null) {
         Navigator.pushReplacementNamed(context, '/verify_prize',
-            arguments: VerifyArgs(campaignId!, ticketId!));
+            arguments: VerifyArgs(campaignId!, ticketId));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Invalid QR code')),
