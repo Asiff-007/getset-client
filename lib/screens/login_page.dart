@@ -93,7 +93,15 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.deepPurpleAccent[700],
           title: Text(tr('appbar_login')),
         ),
-        body: SingleChildScrollView(
+        body:Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [Color(0xff621eee), Color(0xffead64b)],
+                    begin: Alignment(0, -1),
+                    end: Alignment(0, 1),
+                    tileMode: TileMode.clamp)),
+            child:  SingleChildScrollView(
           child: Form(
             key: formKey,
             child: Column(
@@ -105,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 270,
                       height: 270,
                       child:
-                          Image.asset('assets/images/getset_logo_business.png'),
+                          Image.asset('assets/images/getset_loogo.png'),
                     ),
                   ),
                 ),
@@ -135,7 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: tr('hint_username'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelStyle:
-                          TextStyle(color: Colors.deepPurpleAccent[700]),
+                          TextStyle(color: Colors.yellow),
+                      hintStyle: TextStyle(color: Colors.white)
                     ),
                     onChanged: (value) {
                       this.userName = value;
@@ -174,7 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: tr('hint_password'),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelStyle:
-                          TextStyle(color: Colors.deepPurpleAccent[700]),
+                          TextStyle(color: Colors.yellow),
+                      hintStyle: TextStyle(color: Colors.white)
                     ),
                     onChanged: (value) {
                       this.passWord = value;
@@ -193,8 +203,16 @@ class _LoginPageState extends State<LoginPage> {
                   width: 150,
                   margin: const EdgeInsets.all(30.0),
                   decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent[700],
-                      borderRadius: BorderRadius.circular(20)),
+                      color: Colors.yellow[600],
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey[700]!.withOpacity(0.2),
+                        spreadRadius: 4,
+                        blurRadius: 10,
+                        offset: Offset(0, 3),
+                      )
+                    ]),
                   child: FlatButton(
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
@@ -215,6 +233,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
