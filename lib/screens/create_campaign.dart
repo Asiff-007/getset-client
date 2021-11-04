@@ -273,8 +273,16 @@ class _CreateCampaignState extends State<CreateCampaign> {
                 width: 130,
                 margin: const EdgeInsets.all(30.0),
                 decoration: BoxDecoration(
-                    color: Colors.tealAccent[400],
-                    borderRadius: BorderRadius.circular(20)),
+                    color: Colors.yellow[600],
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey[700]!.withOpacity(0.2),
+                        spreadRadius: 4,
+                        blurRadius: 10,
+                        offset: Offset(0, 3),
+                      )
+                    ]),
                 child: editStatus
                     ? FlatButton(
                         onPressed: () async {

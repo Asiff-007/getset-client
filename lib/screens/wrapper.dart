@@ -104,7 +104,7 @@ class _WrapperState extends State<Wrapper> {
           )),
       floatingActionButton: _currentIndex == 1
           ? FloatingActionButton(
-              backgroundColor: Colors.tealAccent[700],
+              backgroundColor: Colors.yellow[600],
               child: Icon(
                 Icons.add,
                 color: Colors.black,
@@ -121,7 +121,7 @@ class _WrapperState extends State<Wrapper> {
                     .then(onReturn);
               })
           : FloatingActionButton(
-              backgroundColor: Colors.tealAccent[700],
+              backgroundColor: Colors.yellow[600],
               child: Icon(
                 Icons.qr_code_2,
                 color: Colors.black,

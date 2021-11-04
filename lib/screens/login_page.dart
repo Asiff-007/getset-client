@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -12,15 +16,34 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   final txtPass = TextEditingController();
   final txtUser = TextEditingController();
+  late AnimationController _controller;
+  late Animation<double> _animation;
   String userName = '';
   String passWord = '';
   String snackBarTxt = '';
   bool shouldpop = false;
   bool connection = true;
+
+  @override
+  void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animation =
+        Tween<double>(begin: 0.9, end: 1.1).animate(CurvedAnimation(parent: _controller, curve: Interval(0.0, 0.5)));
+    _controller.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   Future onBackPress({ctx}) async {
     await showDialog<String>(
@@ -83,138 +106,162 @@ class _LoginPageState extends State<LoginPage> {
     Network().checkConnection(context);
 
     return WillPopScope(
-      onWillPop: () async {
-        await onBackPress(ctx: this.context);
-        return shouldpop;
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.deepPurpleAccent[700],
-          title: Text(tr('appbar_login')),
-        ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Center(
-                    child: Container(
-                      width: 270,
-                      height: 270,
-                      child:
-                          Image.asset('assets/images/getset_logo_business.png'),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.deepPurpleAccent,
+        onWillPop: () async {
+          await onBackPress(ctx: this.context);
+          return shouldpop;
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.deepPurpleAccent[700],
+            title: Text(tr('appbar_login')),
+          ),
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [Color(0xff621eee), Color(0xffead64b)],
+                    begin: Alignment(0, -1),
+                    end: Alignment(0, 1),
+                    tileMode: TileMode.clamp)),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40.0),
+                      child: Center(
+                        child: ScaleTransition(
+                          scale: _animation,
+                          child:Container(
+                              width: 270,
+                              height: 270,
+                              child: Image.asset(
+                                'assets/images/getset_logo.png',
+                              ),
+                            ),
                         ),
                       ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.deepPurpleAccent,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(10),
+                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(
+                                color: Colors.yellow,
+                              ),),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepPurpleAccent,
+                                width: 2
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepPurpleAccent,
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.deepPurpleAccent, width: 3)),
+                            labelText: tr('label_username'),
+                            hintText: tr('hint_username'),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            labelStyle: TextStyle(color: Colors.yellow),
+                            hintStyle: TextStyle(color: Colors.white)),
+                        onChanged: (value) {
+                          this.userName = value;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return tr('validation_username');
+                          }
+                          return null;
+                        },
+                        controller: txtUser,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 25.0, right: 25.0, top: 15, bottom: 0),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(10),
+                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(
+                                color: Colors.yellow,
+                              ),),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepPurpleAccent,
+                                width: 2
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepPurpleAccent,
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.deepPurpleAccent, width: 3)),
+                            labelText: tr('label_password'),
+                            hintText: tr('hint_password'),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            labelStyle: TextStyle(color: Colors.yellow),
+                            hintStyle: TextStyle(color: Colors.white)),
+                        onChanged: (value) {
+                          this.passWord = value;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return tr('validation_password');
+                          }
+                          return null;
+                        },
+                        controller: txtPass,
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: 150,
+                      margin: const EdgeInsets.all(30.0),
+                      decoration: BoxDecoration(
+                          color: Colors.yellow[600],
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey[700]!.withOpacity(0.2),
+                              spreadRadius: 4,
+                              blurRadius: 10,
+                              offset: Offset(0, 3),
+                            )
+                          ]),
+                      child: FlatButton(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            loginFunction(
+                                userName: this.userName,
+                                passWord: this.passWord,
+                                ctx: this.context);
+                          }
+                        },
+                        child: Text(
+                          tr('login_button'),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.deepPurpleAccent, width: 3)),
-                      labelText: tr('label_username'),
-                      hintText: tr('hint_username'),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle:
-                          TextStyle(color: Colors.deepPurpleAccent[700]),
                     ),
-                    onChanged: (value) {
-                      this.userName = value;
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return tr('validation_username');
-                      }
-                      return null;
-                    },
-                    controller: txtUser,
-                  ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 25.0, right: 25.0, top: 15, bottom: 0),
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.deepPurpleAccent,
-                        ),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.deepPurpleAccent,
-                        ),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.deepPurpleAccent, width: 3)),
-                      labelText: tr('label_password'),
-                      hintText: tr('hint_password'),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle:
-                          TextStyle(color: Colors.deepPurpleAccent[700]),
-                    ),
-                    onChanged: (value) {
-                      this.passWord = value;
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return tr('validation_password');
-                      }
-                      return null;
-                    },
-                    controller: txtPass,
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 150,
-                  margin: const EdgeInsets.all(30.0),
-                  decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent[700],
-                      borderRadius: BorderRadius.circular(20)),
-                  child: FlatButton(
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        loginFunction(
-                            userName: this.userName,
-                            passWord: this.passWord,
-                            ctx: this.context);
-                      }
-                    },
-                    child: Text(
-                      tr('login_button'),
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

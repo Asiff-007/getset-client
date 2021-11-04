@@ -80,7 +80,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
           actions: [
             Switch(
               value: switchStatus,
-              activeColor: Colors.tealAccent[700],
+              activeColor: Colors.yellow,
               activeTrackColor: Colors.tealAccent[300],
               onChanged: (value) async {
                 await updateCampaign(campaignId: campaignId, value: value);
@@ -97,6 +97,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                 padding: new EdgeInsets.only(
                     left: 18.0, right: 18, top: 15, bottom: 4),
                 child: Card(
+                    color: Colors.yellow[600],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -113,7 +114,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                                   child: Text(
                                     tr('prize_claimed'),
                                     style: (TextStyle(
-                                        fontSize: 20, color: Colors.black54)),
+                                        fontSize: 20, color: Colors.indigo[900])),
                                     textAlign: TextAlign.start,
                                   )),
                             ),
@@ -136,7 +137,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                                             top: 15, bottom: 15),
                                         child: Text(tr('prize_empty-2'),
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 18)),
+                                            style: TextStyle(fontSize: 18,color: Colors.indigo[900])),
                                       ));
                                     } else {
                                       return Container(
@@ -169,7 +170,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color:
-                                                                Colors.black54),
+                                                                Colors.indigo[900]),
                                                         textAlign:
                                                             TextAlign.center),
                                                     subtitle: Text(prizeName,
@@ -179,7 +180,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                                                         style: TextStyle(
                                                             fontSize: 15.0,
                                                             color:
-                                                                Colors.black54),
+                                                                Colors.indigo[900]),
                                                         textAlign:
                                                             TextAlign.center),
                                                   ),
@@ -204,13 +205,13 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                        color: Colors.indigo[900]),
                   ),
                   SizedBox(
                     width: 5,
                   ),
                   Text('players',
-                      style: TextStyle(fontSize: 18.0, color: Colors.black54))
+                      style: TextStyle(fontSize: 18.0, color: Colors.indigo[900]))
                 ])),
             Padding(
                 padding: new EdgeInsets.only(
@@ -255,7 +256,7 @@ class _CampaignDetailsState extends State<CampaignDetails> {
                                               textAlign: TextAlign.end,
                                               style: TextStyle(
                                                   fontSize: 16,
-                                                  color: Colors.black54),
+                                                  color: Colors.indigo[900]),
                                             )),
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 0, horizontal: 1),
