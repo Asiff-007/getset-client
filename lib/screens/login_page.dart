@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage>
   final txtPass = TextEditingController();
   final txtUser = TextEditingController();
   late AnimationController _controller;
-  late Animation<double> _Animation;
+  late Animation<double> _animation;
   String userName = '';
   String passWord = '';
   String snackBarTxt = '';
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage>
   void initState() {
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _Animation =
+    _animation =
         Tween<double>(begin: 0.9, end: 1.1).animate(CurvedAnimation(parent: _controller, curve: Interval(0.0, 0.5)));
     _controller.repeat(reverse: true);
     super.initState();
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage>
                       padding: const EdgeInsets.only(top: 40.0),
                       child: Center(
                         child: ScaleTransition(
-                          scale: _Animation,
+                          scale: _animation,
                           child:Container(
                               width: 270,
                               height: 270,
