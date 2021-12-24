@@ -15,6 +15,10 @@ class Constants {
 
   static final String Claimed = "Claimed";
 
+  static final String Name = "Name";
+
+  static final String contactNumber = "contactNumber";
+
   static final int prizeIndex = 1;
 
   static final int campaignIndex = 0;

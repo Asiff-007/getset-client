@@ -26,6 +26,9 @@
     "label_edit":"SAVE",
     "label_scan_coupen": "SCAN COUPON",
     "label_scan_desc": "Scan coupon to verify prize",
+    "label_get_set":"GET SET",
+    "label_name":"Name",
+    "label_contact_number":"Contact Number",
 
     "hint_username":"Enter valid username",
     "hint_password":"Enter valid password",
@@ -35,6 +38,8 @@
     "hint_prize_name":"Enter Prize Name",
     "hint_prize_quantity":"Enter Prize Quantity",
     "hint_prize_expiry":"Select Prize Expiry Date",
+    "hint_name":"Enter your name",
+    "hint_contact_number":"Enter your contact number",
 
     "validation_password":"Please enter password",
     "validation_username":"Please enter username",
@@ -47,6 +52,8 @@
     "validation_prize_expiry-1":"Select The Expiry Date Of Your Prize",
     "validation_prize_expiry-2":"Date Before Campaign Start Can't Select For Prize Expiry",
     "validation_prize_image":"Select Image for Your Prize",
+    "validation_name":"Please enter your name",
+    "validation_contact_number":"Please enter your contact number",
 
     "no_internet":"No internet connection",
     "new_campaign":"NEW CAMPAIGN",
@@ -79,6 +86,16 @@
     "players":"PLAYERS",
 
     "title_verification":"PRIZE VERIFIED",
-    "ticket_id":"TICKET ID"
+    "title_signup":"Get ready to transform \n the customer experience \n at your store",
+    "title_response":"Get set to elevate  your business, \n ",
+    "ticket_id":"TICKET ID",
+
+    "welcome_note":"Introduce immersive shopping \n to your customers.",
+
+    "no_account":"Don’t have an account?",
+
+    "signup_success":"Get Set",
+    "signup_replay_1":"We will contact you,\n On ",
+    "signup_replay_2":"\n to know more about your business.\n And onboard you to Get Set."
 
 }
