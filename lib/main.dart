@@ -5,7 +5,10 @@ import 'package:retail_client/screens/args/campaign_args.dart';
 import 'package:retail_client/screens/args/verify-prize_args.dart';
 import 'package:retail_client/screens/scan.dart';
 import 'package:retail_client/screens/wrapper.dart';
+import './screens/start_page.dart';
 import './screens/login_page.dart';
+import './screens/signup_page.dart';
+import './screens/response_page.dart';
 import './screens/home_page.dart';
 import 'screens/create_campaign.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +24,7 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   final bool isLogged = prefs.getBool(Constants.isLogged) ?? false;
   final MyApp myApp = MyApp(
-    initialRoute: isLogged ? '/home' : '/login',
+    initialRoute: isLogged ? '/home' : '/start',
   );
   runApp(EasyLocalization(
       supportedLocales: [Locale('en', 'US')],
@@ -42,7 +45,10 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         initialRoute: initialRoute,
         routes: {
+          '/start': (context) => StartPage(),
           '/login': (context) => LoginPage(),
+          '/signup': (context) => SignupPage(),
+          '/response': (context) => ResponsePage(),
           '/home': (context) => HomePage(),
           '/campaign': (context) => CreateCampaign(
                 campaignId: 0,
