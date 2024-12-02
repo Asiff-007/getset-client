@@ -1,6 +1,14 @@
 # retail_client
 
-A new Flutter project.
+Flutter-based frontend for the GetSet application, a digital engagement platform for retail customers. The app enables users to participate in fun games to win prizes, redeem discounts, and stay updated on the latest offers. Designed with a responsive UI, the application delivers a seamless experience across both mobile and tablet devices.
+Features:
+Interactive game modules for customer engagement.
+User-friendly interface for redeeming discounts and viewing offers.
+Secure token-based authentication for user sessions.
+Real-time crash reporting integrated using Firebase Crashlytics.
+Utilizes GetX for state management and ensures smooth navigation.
+Built following MVC architecture for scalability and maintainability.
+Technologies Used: Flutter,Firebase, Git
 
 ## Getting Started
 
